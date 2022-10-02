@@ -69,7 +69,7 @@ export default {
     methods: {
         processSignUp: function () {
             axios.post(
-                "http://localhost:7777/usuario",
+                "V1/usuario",
                 this.user,
                 { headers: {} }
             )
