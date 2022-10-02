@@ -23,10 +23,10 @@ vue create <proyecto>
 
 - Save this as a preset for future projects? No
 
-## To run the server, you must be in the <proyecto> folder
+## Para correr el servidor, la terminal debe estar en la carpeta <proyecto>
 
 - npm run serve
 
-## To stop the serve
+## Para detener el servidor
 
 - Ctrl + C
