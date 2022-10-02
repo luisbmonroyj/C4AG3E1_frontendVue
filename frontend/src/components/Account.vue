@@ -4,7 +4,7 @@
         <h2 class="my-5">Bienvenido</h2>
         <div class="row">
             <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
-                <h2 class="mb-5 border-bottom">Administrar Candidatos</h2>
+                <h2 class="mb-5 border-bottom">Crear Candidatos</h2>
                 <form class="my-3" v-on:submit.prevent="createCandidato">
                     <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
                     <input type="text" class="form-control" placeholder="000000" v-model="candidato.cedula">
@@ -36,8 +36,42 @@
                     </div>
                 </form>
             </div>
+            <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
+                <h2 class="mb-5 border-bottom">Editar Candidatos</h2>
+                <form class="my-3" v-on:submit.prevent="createCandidato">
+                    <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
+                    <input type="text" class="form-control" placeholder="000000" v-model="candidatoEdit.cedula" id="editcedula" disabled >
+                    <br>
+                    <input type="text" class="form-control" placeholder="Apellido" v-model="candidatoEdit.apellido" id="editapellido">
+                    <br>
+                    <input type="text" class="form-control" placeholder="Nombre" v-model="candidatoEdit.nombre" id="editnombre">
+                    <br>
+                    <input type="text" class="form-control" placeholder="Resolucion" v-model="candidatoEdit.resolucion" id="editresolucion">
+                    <br>
+                    <input type="file" class="form-control" ref="file" v-on:change="uploadFile2()">
+                    <br>
+                    <input type="list" list="partidos" class="form-control" placeholder="partido" v-model="candidatoEdit.id_partido" id="editpartido">
+                    <datalist id="partidos">
+                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
+                    </datalist>
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-outline-secondary ">
+                                Editar Candidato
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="reset" class="btn btn-outline-secondary">
+                                Limpiar Formulario
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="column">
             <div class="col-sm-12 col-md-8 col-ls-8 col-xl-8">
-
                 <table class="table table-hover table-striped" v-if="candidatos.length > 0">
                     <thead class="">
                         <tr class="" style="background-color:rgba(56, 113, 176, 0.4)">
@@ -88,8 +122,6 @@
 
             </div>
         </div>
-
-
     </div>
     
 </template>
@@ -113,11 +145,22 @@ export default {
                 foto: ({images: null})
             },
             partidos: [],
+            candidatoEdit: {
+                cedula: "",
+                apellido: "",
+                nombre: "",
+                resolucion: "",
+                id_partido: "",
+                foto: ({images: null})
+            }
         }
     },
     methods: {
         uploadFile() {
             this.candidato.foto = this.$refs.file.files[0];
+        },
+        uploadFile() {
+            this.candidatoEdit.foto = this.$refs.file.files[0];
         },
         getCandidatos: async function () {
             if (localStorage.getItem("token") === null) {
@@ -166,12 +209,16 @@ export default {
         },
         */
         loadEditarCandidato: function (cedula_candidato) {
-            if (localStorage.getItem("token") === null) {
-                this.$emit('logOut');
-                return;
-            }
-            let token = localStorage.getItem("token");
-            let conf = confirm("¿Seguro desea eliminar el candidato?");
+            //console.log(partidoDeCandidato)
+            this.candidatos.forEach(function (candidato) {
+                if (candidato.cedula == cedula_candidato){
+                    document.getElementById("editcedula").value = cedula_candidato;
+                    document.getElementById("editnombre").value = candidato.nombre;
+                    document.getElementById("editapellido").value = candidato.apellido;
+                    document.getElementById("editresolucion").value = candidato.resolucion;
+                    document.getElementById("editpartido").value = candidato.id_partido;
+                }
+            })
             
         },
         loadEliminarCandidato: async function (cedula_candidato) {
