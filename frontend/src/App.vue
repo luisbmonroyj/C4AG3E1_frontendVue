@@ -17,7 +17,7 @@
                         <a class="nav-link" href="about.html">¿Quienes somos?</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="signUp.html">Registro</a>
+                        <a class="nav-link " v-on:click="loadSignUp">Registro</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" v-on:click="loadLogin">Inicio de Sesión</a>
@@ -58,6 +58,9 @@
     loadLogin: function(){
         this.$router.push({name:'login'})
     },
+    loadSignUp: function(){
+        this.$router.push({name:'signup'})
+      },
   verifyAuth: function(){
         this.is_Auth = localStorage.getItem('is_Auth') || false;
         if(this.is_Auth==false)
