@@ -129,7 +129,7 @@ export default {
             return x; 
         },
         */
-        loadEliminarCandidato: async function (citaId) {
+        loadEliminarCandidato: async function (cedula_candidato) {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
                 return;
@@ -138,10 +138,11 @@ export default {
             let conf = confirm("¿Seguro desea eliminar el candidato?");
             if (conf === true) {
                 axios.delete(
-                    `V1/candidato/delete`,
-                    { headers: { 'Authorization': `Bearer ${token}` } }
+                    `V1/candidato/delete`,{ headers: { 'Authorization': `Bearer ${token}` }},
+                    {"cedula":cedula_candidato}
                 )
-                    .then(() => {
+                    .then((result) => {
+                        console.log(result)
                         alert("Candidato eliminado correctamente")
                         this.getData()
                     }
@@ -171,7 +172,7 @@ export default {
             axios.post(url, null, { headers: { 'Authorization': `Bearer ${token}` } },
             )
                 .then((result) => {
-                    //console.log(result)
+                    //cc
                     alert("Candidato creado");
                     this.getData();
                 })
