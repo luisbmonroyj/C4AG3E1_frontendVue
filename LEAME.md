@@ -6,6 +6,10 @@
 
 npm install -g @vue/cli
 
+## si se importa el repositorio, no se debe crear el proyecto, solo instalar los componentes
+
+npm install
+
 ## creacion del proyecto
 
 vue create <proyecto>
