@@ -6,11 +6,14 @@
 
 npm install -g @vue/cli
 
+- se puede quitar el parametro -g pero en la carpeta del proyecto
+
 ## si se importa el repositorio, no se debe crear el proyecto, solo instalar los componentes
+-Es posible que se necesite una terminal con permisos de administrador
 
 npm install
 
-## creacion del proyecto
+## creacion del proyecto (opcional)
 
 vue create <proyecto>
 
@@ -18,13 +21,9 @@ vue create <proyecto>
     - manually select version (optional)
     - Babel
     - Router   
-
 - version 3.x
-
 - Use history mode for router? No
-
 - Where do you prefer placing config for Babel, ESLint, etc.? In package.json
-
 - Save this as a preset for future projects? No
 
 ## Para correr el servidor, la terminal debe estar en la carpeta <proyecto>
