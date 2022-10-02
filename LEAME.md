@@ -30,3 +30,10 @@ vue create <proyecto>
 ## Para detener el servidor
 
 - Ctrl + C
+
+## Para cambiar el puerto de salida del servicio
+- cambiar el archivo vue.config.json con las siguientes lineas
+
+'const { defineConfig } = require('@vue/cli-service')'
+'module.exports = {devServer: {  port: 3454 \}\}'
+
