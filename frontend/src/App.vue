@@ -1,7 +1,7 @@
 <template>
   <div id="App" class="App">
     <div class="text-center">
-        <img src="./assets/logo.png" alt="ogo Registraduria" class="img-fluid">
+        <img src="./assets/logo.png" alt="Logo Registraduria" class="img-fluid">
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark size-nav menu">
         <div class="container-fluid">
@@ -17,18 +17,25 @@
                         <a class="nav-link" href="about.html">¿Quienes somos?</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " v-on:click="loadSignUp">Registro</a>
+                        <a class="nav-link " v-on:click="loadSignUp"  v-if="!is_Auth">Registro</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="loadLogin">Inicio de Sesión</a>
+                        <a class="nav-link" v-on:click="loadLogin"  v-if="!is_Auth">Inicio de Sesión</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" v-on:click="loadAccount" v-if="is_Auth">Mi cuenta</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" v-on:click="loadLogOut" v-if="is_Auth">Cerrar Sesión</a>
+                    </li>
+                    
                 </ul>
             </div>
         </div>
     </nav>
     <br>
     <div class="main-component">
-      <router-view v-on:completedLogin="completedLogin">
+      <router-view v-on:completedLogin="completedLogin" v-on:loadLogOut="loadLogOut">
       </router-view>
     </div>
     <br>
@@ -67,8 +74,11 @@
           //this.$router.push({name:'home'})
           console.log("False")
         else
-          //this.$router.push({name: 'account'})
-          console.log("True")
+          this.$router.push({name: 'account'})
+          //console.log("True")
+      },
+      loadAccount: function(){
+        this.$router.push({name:'account'})
       },
   completedLogin: function(data){
         console.log(data);
@@ -76,6 +86,14 @@
         localStorage.setItem('user', data.user);
         localStorage.setItem('is_Auth', true);
         this.verifyAuth();
+      },
+      loadLogOut: function(){
+        let logOutConfirm = confirm("¿Desea cerrar la sesión?")
+        if (logOutConfirm){
+          localStorage.clear();
+          alert("Sesión cerrada");
+          this.verifyAuth();
+        }
       }
     }
   }
