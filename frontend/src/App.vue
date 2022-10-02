@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app">
+  <div id="App" class="App">
     <div class="text-center">
         <img src="./assets/logo.png" alt="ogo Registraduria" class="img-fluid">
     </div>
@@ -20,35 +20,16 @@
                         <a class="nav-link " href="signUp.html">Registro</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="login.html">Inicio de Sesión</a>
+                        <a class="nav-link" v-on:click="loadLogin">Inicio de Sesión</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <br>
-    <div id="carouselExampleInterval" style="margin-top:50px;" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active" data-bs-interval="5000">
-                <img src="./assets/logo.png" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="./assets/logo.png" class="d-block w-100" alt="...">
-            </div>
-            <div class="carousel-item" data-bs-interval="5000">
-                <img src="./assets/logo.png" class="d-block w-100" alt="...">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
+    <div class="main-component">
+      <router-view v-on:completedLogin="completedLogin">
+      </router-view>
     </div>
     <br>
     <footer class="bg-dark text-center text-white">
@@ -65,11 +46,35 @@
   export default {
   name: 'App',
   data: function(){
+    activeItem:0;
+      return {
+        is_Auth: false
+      }
   },
+  components: {},
   methods:{
-  },
-  created: function(){
-  }
+    created: function(){
+    },
+    loadLogin: function(){
+        this.$router.push({name:'login'})
+    },
+  verifyAuth: function(){
+        this.is_Auth = localStorage.getItem('is_Auth') || false;
+        if(this.is_Auth==false)
+          //this.$router.push({name:'home'})
+          console.log("False")
+        else
+          //this.$router.push({name: 'account'})
+          console.log("True")
+      },
+  completedLogin: function(data){
+        console.log(data);
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', data.user);
+        localStorage.setItem('is_Auth', true);
+        this.verifyAuth();
+      }
+    }
   }
   </script>
   <style>
