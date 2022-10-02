@@ -56,7 +56,7 @@ export default {
         }
     },
     created(){
-        document.title = "Iniciar sesión - Peluquería MinTic"
+        document.title = "Iniciar sesión"
     }
 }
 </script>

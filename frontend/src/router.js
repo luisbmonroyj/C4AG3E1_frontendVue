@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 import login from './components/LogIn.vue'
 import signup from './components/SignUp.vue'
+import account from './components/Account.vue'
 
 const routes = [
   {
@@ -17,7 +18,13 @@ const routes = [
   {
   path: '/user/signup',
   name: "signup",
-  component: signup}]
+  component: signup
+  },
+  {
+    path: '/account',
+    name: "account",
+    component: account}
+]
 
 const router = createRouter({
   history: createWebHashHistory(),

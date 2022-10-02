@@ -106,7 +106,7 @@ export default {
         }
     },
     created() {
-        document.title = "Registrarse - Peluquería MinTic"
+        document.title = "Registrarse"
     }
 
 }
