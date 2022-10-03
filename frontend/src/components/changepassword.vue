@@ -4,13 +4,12 @@
             <div class="col-4">
             </div>
             <div class="col-4 border my-5 card">
-                <h2 class="my-5">Registrate</h2>
-                <form v-on:submit.prevent="processSignUp">
+                <h2 class="my-5">Cambiar contraseña</h2>
+                <form v-on:submit.prevent="changePassword">
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <input type="email" class="form-control" placeholder="Mail@mail.com" v-model="user.user"
-                                required>
+                            <input type="number" id="cedula" class="form-control" v-model="user.cedula" disabled>
                         </div>
                         <div class="col-1"></div>
                     </div>
@@ -18,31 +17,30 @@
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <input type="password" class="form-control" placeholder="Contraseña"
+                            <input type="email" id="user" class="form-control" v-model="user.user" disabled>
+                        </div>
+                        <div class="col-1"></div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <input type="password" id="contrasena" class="form-control" placeholder="Contraseña"
                                 v-model="user.contrasena" required>
                         </div>
                         <div class="col-1"></div>
                     </div>
-
                     <br>
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <input type="number" class="form-control" placeholder="3002221100" v-model="user.cedula"
-                                required>
+                            <input type="password" id="contrasena2" class="form-control" placeholder="Repetir Contraseña"
+                                v-model="user.contrasena" required>
                         </div>
                         <div class="col-1"></div>
                     </div>
                     <br>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="checkbox" class="" required id="chk" unchecked>
-                            <label for="chk">&nbsp;&nbsp; Acepto los <a href="">términos</a></label>
-                        </div>
-                        <div class="col-1"></div>
-                    </div>
-                    <button type="submit" class="btn btn-primary my-5">Registrarse</button>
+                    <button type="submit" class="btn btn-primary my-5">Cambiar contraseña</button>
                 </form>
             </div>
             <div class="col-4">
@@ -63,12 +61,16 @@ export default {
                 cedula: 0,
                 user: "",
                 contrasena: "",
+                contrasena2: ""
             }
         }
     },
     methods: {
-        processSignUp: function () {
-            axios.post(
+        loadData: function(){
+            document.getElementById("user").value = localStorage.getItem(user);
+        },
+        changePassword: function () {
+           axios.post(
                 "V1/usuario",
                 this.user,
                 { headers: {} }
@@ -101,9 +103,10 @@ export default {
                     alert("Error en el registro");
                 });
         }
-    },
+   },
     created() {
-        document.title = "Registrarse"
+        document.title = "Cambiar contraseña";
+        
     }
 
 }

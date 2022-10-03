@@ -106,6 +106,7 @@
     completedLogin: function(data){
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', data.user);
+        localStorage.setItem('user', data.cedula);
         let tokenDecoded = jwt_decode(data.token)
         if (tokenDecoded.sub.id_rol.nombre == "registrador nacional"){
           localStorage.setItem('is_Admin', 1);
@@ -122,6 +123,7 @@
           localStorage.clear();
           alert("Sesión cerrada");
           this.verifyAuth();
+          localStorage.clear();
         }
       }
     },
