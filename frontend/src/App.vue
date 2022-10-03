@@ -8,7 +8,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                        <a class="nav-link active" aria-current="page" v-on:click="loadHome">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contáctenos</a>
@@ -17,16 +17,19 @@
                         <a class="nav-link" href="about.html">¿Quienes somos?</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link " v-on:click="loadSignUp"  v-if="!is_Auth">Registro</a>
+                        <a class="nav-link " v-on:click="loadSignUp"  v-if="is_Auth == 0">Registro</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="loadLogin"  v-if="!is_Auth">Inicio de Sesión</a>
+                        <a class="nav-link" v-on:click="loadLogin"  v-if="is_Auth == 0">Inicio de Sesión</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="loadAccount" v-if="is_Auth">Mi cuenta</a>
+                        <a class="nav-link" v-on:click="loadAccount" v-if="is_Admin == 1">Administración</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="loadLogOut" v-if="is_Auth">Cerrar Sesión</a>
+                        <a class="nav-link" v-on:click="loadResultados" v-if="is_Auth == 1">Resultados</a>
+                    </li>                    
+                    <li class="nav-item">
+                        <a class="nav-link" v-on:click="loadLogOut" v-if="is_Auth == 1">Cerrar Sesión</a>
                     </li>
                     
                 </ul>
@@ -43,51 +46,71 @@
         <div class="text-center p-5">
             <p class="separacion">Avenida Calle 26 # 51-50 - CAN (Bogotá - Colombia)</p>
             <p class="separacion">- Horario de atención correspondencia de lunes a viernes de 8:00 a.m. a 4:30 p.m. en jornada continua (Sede CAN Avenida Calle 26 # 51-50 )</p>
-            <p class="separacion">- Conmutador: +57 (601) 220 2880</p>
+            <p class="separacion">- Conmutador: +57 (61) 220 2880</p>
             <p class="separacion">- CAIC Centro de Atención e Información al Ciudadano</p>
         </div>
     </footer>
   </div>
   </template>
   <script>
+  
+  import jwt_decode from 'jwt-decode';
+
   export default {
   name: 'App',
   data: function(){
-    activeItem:0;
       return {
-        is_Auth: false
+        is_Auth: 0,
+        is_Admin: 0
       }
   },
   components: {},
   methods:{
-    created: function(){
-    },
     loadLogin: function(){
         this.$router.push({name:'login'})
     },
     loadSignUp: function(){
         this.$router.push({name:'signup'})
       },
-  verifyAuth: function(){
-        this.is_Auth = localStorage.getItem('is_Auth') || false;
-        if(this.is_Auth==false)
-          //this.$router.push({name:'home'})
-          console.log("False")
-        else
-          this.$router.push({name: 'account'})
-          //console.log("True")
+    verifyAuth: function(){
+        this.is_Auth = localStorage.getItem('is_Auth') || 0;
+        this.is_Admin = localStorage.getItem('is_Admin') || 0;
+        if(this.is_Auth==0){
+          this.$router.push({name:'home'});
+        } 
+        else if(this.is_Admin==0){
+          this.$router.push({name:'resultados'});
+        }
+        else if(this.is_Admin==1){
+          this.$router.push({name:'account'});
+        }
+        else {
+          console.log("no es nada")
+        }
       },
-      loadAccount: function(){
+    loadAccount: function(){
         this.$router.push({name:'account'})
       },
-  completedLogin: function(data){
-        console.log(data);
+    loadResultados: function(){
+        this.$router.push({name:'resultados'})
+      },
+    loadHome: function(){
+        this.$router.push({name:'home'})
+      },
+    completedLogin: function(data){
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', data.user);
-        localStorage.setItem('is_Auth', true);
+        let tokenDecoded = jwt_decode(data.token)
+        if (tokenDecoded.sub.id_rol.nombre == "registrador nacional"){
+          localStorage.setItem('is_Admin', 1);
+        }
+        else{
+          localStorage.setItem('is_Admin', 0);
+        }
+        localStorage.setItem('is_Auth', 1);
         this.verifyAuth();
       },
-      loadLogOut: function(){
+    loadLogOut: function(){
         let logOutConfirm = confirm("¿Desea cerrar la sesión?")
         if (logOutConfirm){
           localStorage.clear();
@@ -95,6 +118,11 @@
           this.verifyAuth();
         }
       }
+    },
+    created: function(){
+      document.title = "Registraduria";
+      this.$router.push({name:'home'})
+      this.verifyAuth();
     }
   }
   </script>
