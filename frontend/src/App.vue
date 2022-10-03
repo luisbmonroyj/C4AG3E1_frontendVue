@@ -29,6 +29,9 @@
                         <a class="nav-link" v-on:click="loadResultados" v-if="is_Auth == 1">Resultados</a>
                     </li>                    
                     <li class="nav-item">
+                        <a class="nav-link" v-on:click="loadChangePassword" v-if="is_Auth == 1">Cambiar contraseña</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" v-on:click="loadLogOut" v-if="is_Auth == 1">Cerrar Sesión</a>
                     </li>
                     
@@ -71,7 +74,10 @@
     },
     loadSignUp: function(){
         this.$router.push({name:'signup'})
-      },
+    },
+    loadChangePassword: function(){
+        this.$router.push({name:'changepassword'})
+    },
     verifyAuth: function(){
         this.is_Auth = localStorage.getItem('is_Auth') || 0;
         this.is_Admin = localStorage.getItem('is_Admin') || 0;
