@@ -5,11 +5,11 @@
             </div>
             <div class="col-4 border my-5 card">
                 <h2 class="my-5">Cambiar contraseña</h2>
-                <form v-on:submit.prevent="changePassword">
+                <form v-on:submit.prevent="changePassword" v-on:updated="loadData">
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <input type="number" id="cedula" class="form-control" v-model="user.cedula" disabled>
+                            <input type="number" id="cedula" class="form-control" v-model="user.cedula" disabled >
                         </div>
                         <div class="col-1"></div>
                     </div>
@@ -17,7 +17,7 @@
                     <div class="row">
                         <div class="col-1"></div>
                         <div class="col-10">
-                            <input type="email" id="user" class="form-control" v-model="user.user" disabled>
+                            <input type="email" id="email" class="form-control" v-model="user.username" disabled>
                         </div>
                         <div class="col-1"></div>
                     </div>
@@ -35,7 +35,7 @@
                         <div class="col-1"></div>
                         <div class="col-10">
                             <input type="password" id="contrasena2" class="form-control" placeholder="Repetir Contraseña"
-                                v-model="user.contrasena" required>
+                                v-model="user.contrasena2" required>
                         </div>
                         <div class="col-1"></div>
                     </div>
@@ -54,37 +54,72 @@
 import axios from 'axios'
 
 export default {
+    //con estos datos se carga el formulario
     name: 'signup',
     data: function () {
-        return {
-            user: {
-                cedula: 0,
-                user: "",
-                contrasena: "",
-                contrasena2: ""
+       return {
+           user: {
+               cedula: localStorage.getItem('cedula'),
+               username: localStorage.getItem('user'),
+               contrasena: "",
+               contrasena2: ""
             }
         }
     },
     methods: {
-        loadData: function(){
-            document.getElementById("user").value = localStorage.getItem(user);
-        },
-        changePassword: function () {
-           axios.post(
-                "V1/usuario",
-                this.user,
-                { headers: {} }
-            )
+        changePassword: async function () {
+            //verificar que la contrasena sea igual en ambos campos
+            if (this.user.contrasena!=this.user.contrasena2){
+                alert("Los datos no coinciden");    
+                return;
+            }
+            else{
+                if (localStorage.getItem("token") === null) {
+                    this.$emit('logOut');
+                    return;
+                }
+                else{
+                    let token = localStorage.getItem("token");
+                    let url = "V1/usuario";
+                    console.log("datos de user");
+                    console.log( this.user.username);
+                    console.log( this.user.cedula);
+                    console.log( this.user.contrasena);
+                    let userData = {
+                        'user':this.user.username,
+                        'cedula':this.user.cedula,
+                        'contrasena': this.user.contrasena
+                    }
+                    console.log(userData);
+                    /*
+                    const formData = new FormData();
+                    formData.append('contrasena', this.user.contrasena);
+                    formData.append('cedula',this.user.cedula);
+                    formData.append('user',this.user.username);
+                    console.log("datos de formData");
+                    console.log(formData);
+                    */
+                    axios.patch(url, userData, { headers: { 'Authorization': `Bearer ${token}` } },
+                    )
+                    .then((result) => {
+                        alert("Contraseña modificada. Debe volver a iniciar sesión");
+                        localStorage.clear();
+                        //this.$emit('logOut')
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        alert("Error al cambiar la contraseña");
+                    })
+                }
+            }
+            /*
+           axios.post("V1/usuario",this.user,{ headers: {} })
                 .then((result) => {
                     let dataSignUp = {
                         user: this.user.user,
                         contrasena: this.user.contrasena,
                     }
-                    axios.post(
-                        "http://localhost:7777/login",
-                        dataSignUp,
-                        { headers: {} }
-                    )
+                    axios.post("http://localhost:7777/login",dataSignUp,{ headers: {} })
                         .then((result) => {
                             let dataLogin = {
                                 token: result.data.token,
@@ -102,6 +137,7 @@ export default {
                     console.log(error);
                     alert("Error en el registro");
                 });
+                */
         }
    },
     created() {
