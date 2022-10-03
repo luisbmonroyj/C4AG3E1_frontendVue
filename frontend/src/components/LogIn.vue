@@ -41,7 +41,8 @@ export default {
                 .then((result) => {
                     let dataLogin = {
                         token: result.data.token,
-                        user: this.user.user
+                        user: this.user.user,
+                        cedula:result.data.user_id
                     }
                     this.$emit('completedLogin', dataLogin);
                 })

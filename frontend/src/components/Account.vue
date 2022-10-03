@@ -4,7 +4,7 @@
         <h2 class="my-5">Bienvenido</h2>
         <div class="row">
             <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
-                <h2 class="mb-5 border-bottom">Crear Candidatos</h2>
+                <h2 class="mb-5 border-bottom">Administrar Candidatos</h2>
                 <form class="my-3" v-on:submit.prevent="createCandidato">
                     <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
                     <input type="text" class="form-control" placeholder="000000" v-model="candidato.cedula">
@@ -134,7 +134,7 @@ export default {
         return {
             name: "",
             candidatos: [],
-            loaded: 0,
+            loaded: false,
             candidato: {
                 cedula: "",
                 apellido: "",
@@ -309,7 +309,7 @@ export default {
         },
     },
     created: function () {
-        document.title = "Cuenta"
+        document.title = "Candidatos"
         this.getPartidos();
         this.getCandidatos();
     }

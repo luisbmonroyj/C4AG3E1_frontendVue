@@ -5,6 +5,10 @@ import signup from './components/SignUp.vue'
 import account from './components/Account.vue'
 import home from './components/home.vue'
 import resultados from './components/resultados.vue'
+import changepassword from './components/changepassword.vue'
+import contactUs from './components/contactUs.vue'
+import mesas from './components/mesas.vue'
+
 const routes = [
   {
     path: '/',
@@ -17,11 +21,6 @@ const routes = [
     component: home
   },
   {
-    path: '/resultados',
-    name: "resultados",
-    component: resultados
-  },
-  {
     path: '/user/logIn',
     name: "login",
     component: login
@@ -30,6 +29,26 @@ const routes = [
     path: '/user/signup',
     name: "signup",
     component: signup
+  },
+  {
+    path: '/user/changepassword',
+    name: "changepassword",
+    component: changepassword
+  },
+  {
+    path: '/contactUs',
+    name: "contactUs",
+    component: contactUs
+  },
+  {
+    path: '/resultados',
+    name: "resultados",
+    component: resultados
+  },
+  {
+    path: '/mesas',
+    name: "mesas",
+    component: mesas
   },
   {
     path: '/account',
