@@ -8,7 +8,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                        <a class="nav-link active" aria-current="page" v-on:click="loadHome">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contáctenos</a>
@@ -88,11 +88,14 @@
           console.log("no es nada")
         }
       },
-      loadAccount: function(){
+    loadAccount: function(){
         this.$router.push({name:'account'})
       },
-      loadResultados: function(){
+    loadResultados: function(){
         this.$router.push({name:'resultados'})
+      },
+    loadHome: function(){
+        this.$router.push({name:'home'})
       },
     completedLogin: function(data){
         localStorage.setItem('token', data.token);
