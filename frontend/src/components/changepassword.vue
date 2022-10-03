@@ -81,17 +81,17 @@ export default {
                 else{
                     let token = localStorage.getItem("token");
                     let url = "V1/usuario";
-                    console.log("datos de user");
-                    console.log( this.user.username);
-                    console.log( this.user.cedula);
-                    console.log( this.user.contrasena);
                     let userData = {
                         'user':this.user.username,
                         'cedula':this.user.cedula,
                         'contrasena': this.user.contrasena
                     }
-                    console.log(userData);
                     /*
+                    console.log("datos de user");
+                    console.log( this.user.username);
+                    console.log( this.user.cedula);
+                    console.log( this.user.contrasena);
+                    console.log(userData);
                     const formData = new FormData();
                     formData.append('contrasena', this.user.contrasena);
                     formData.append('cedula',this.user.cedula);

@@ -6,6 +6,8 @@ import account from './components/Account.vue'
 import home from './components/home.vue'
 import resultados from './components/resultados.vue'
 import changepassword from './components/changepassword.vue'
+import contactUs from './components/contactUs.vue'
+import mesas from './components/mesas.vue'
 
 const routes = [
   {
@@ -17,11 +19,6 @@ const routes = [
     path: '/home',
     name: "home",
     component: home
-  },
-  {
-    path: '/resultados',
-    name: "resultados",
-    component: resultados
   },
   {
     path: '/user/logIn',
@@ -37,6 +34,21 @@ const routes = [
     path: '/user/changepassword',
     name: "changepassword",
     component: changepassword
+  },
+  {
+    path: '/contactUs',
+    name: "contactUs",
+    component: contactUs
+  },
+  {
+    path: '/resultados',
+    name: "resultados",
+    component: resultados
+  },
+  {
+    path: '/mesas',
+    name: "mesas",
+    component: mesas
   },
   {
     path: '/account',
