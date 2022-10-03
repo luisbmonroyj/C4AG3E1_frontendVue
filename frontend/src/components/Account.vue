@@ -134,7 +134,7 @@ export default {
         return {
             name: "",
             candidatos: [],
-            loaded: false,
+            loaded: 0,
             candidato: {
                 cedula: "",
                 apellido: "",
@@ -165,11 +165,8 @@ export default {
             axios.get('V1/candidato/get',
                 { headers: { 'Authorization': `Bearer ${token}` } })
                 .then((result) => {
-                    //console.log(this.candidatos);
                     this.candidatos = result.data.Candidatos;
-                    //console.log(this.candidatos);
                     this.loaded = true;
-                    //console.log(result.data);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -185,11 +182,8 @@ export default {
             axios.get('V1/partido/get',
                 { headers: { 'Authorization': `Bearer ${token}` } })
                 .then((result) => {
-                    //console.log(this.partidos);
                     this.partidos = result.data.Partidos;
-                    //console.log(this.partidos);
                     this.loaded = true;
-                    //console.log(result.data);
                 })
                 .catch((error) => {
                     console.log(error)
@@ -203,7 +197,6 @@ export default {
         },
         */
         loadEditarCandidato: function (cedula_candidato) {
-            //console.log(partidoDeCandidato)
             this.candidatos.forEach(function (candidato) {
                 if (candidato.cedula == cedula_candidato){
                     document.getElementById("editcedula").value = cedula_candidato;
@@ -263,7 +256,6 @@ export default {
             }
             let token = localStorage.getItem("token");
             let partidoDeCandidato = this.candidato.id_partido;
-            //console.log(partidoDeCandidato)
             var id_part=0;
             this.partidos.forEach(function (combo) {
                 if (combo.nombre == partidoDeCandidato){
@@ -278,13 +270,12 @@ export default {
             axios.post(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
             )
                 .then((result) => {
-                    //cc
                     alert("Candidato creado");
                     this.getCandidatos();
                 })
                 .catch((error) => {
                     console.log(error);
-                        alert("Error al crear el candidato");
+                    alert("Error al crear el candidato");
                 })
         },
         editarCandidato: async function () {
@@ -294,7 +285,6 @@ export default {
             }
             let token = localStorage.getItem("token");
             let partidoDeCandidato = document.getElementById("editpartido").value;
-            //console.log(partidoDeCandidato)
             var id_part=0;
             this.partidos.forEach(function (combo) {
                 if (combo.nombre == partidoDeCandidato){
@@ -314,15 +304,13 @@ export default {
                 })
                 .catch((error) => {
                     console.log(error);
-                        alert("Error al editar el candidato");
+                    alert("Error al editar el candidato");
                 })
         },
     },
-    created: async function () {
+    created: function () {
         document.title = "Cuenta"
-        //this.partidos = ['1','2','3','4'];
         this.getPartidos();
-        //console.log(this.partidos);
         this.getCandidatos();
     }
 

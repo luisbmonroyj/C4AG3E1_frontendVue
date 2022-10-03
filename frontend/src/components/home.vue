@@ -3,6 +3,9 @@
 </template>
 <script>
     export default{
-        name:'home'
+        name:'home',
+    created(){
+        console.log("Home Cargado")
+    }
     }
 </script>
