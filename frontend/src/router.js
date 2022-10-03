@@ -8,6 +8,7 @@ import resultados from './components/resultados.vue'
 import changepassword from './components/changepassword.vue'
 import contactUs from './components/contactUs.vue'
 import mesas from './components/mesas.vue'
+import about from './components/about.vue'
 
 const routes = [
   {
@@ -54,6 +55,11 @@ const routes = [
     path: '/account',
     name: "account",
     component: account
+  },
+  {
+    path: '/about',
+    name: "about",
+    component: about
   }
 ]
 

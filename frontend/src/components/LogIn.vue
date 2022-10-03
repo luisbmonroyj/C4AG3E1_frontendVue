@@ -1,19 +1,23 @@
 <template>
     <div class="logInUser">
-        <div class="container">
-            <div class="row my-5">
-                <div class="col-4"></div>
-                <div class="col-4 my-5 p-5 card border-success mb-4">
-                    <h2 class="card-title mb-5">Iniciar Sesión</h2>
-                    <form v-on:submit.prevent="processLogin">
-                        <input type="text" class="form-control" placeholder="Nombre de usuario" v-model="user.user">
-                        <br>
-                        <input type="password" class="form-control" placeholder="Contraseña" v-model="user.contrasena">
-                        <br>
-                        <button type="submit" class="btn btn-success">Iniciar Sesión</button>
+        <div class="container text-center">
+            <h2>Inicio de Sesión</h2>
+            <br>
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <form action="" v-on:submit.prevent="processLogin" class="row g-3">
+                        <div class="row mb-3">
+                            <input type="email" class="form-control borde" v-model="user.user" placeholder="Email">
+                        </div>
+                        <div class="row mb-3">
+                            <input type="password" class="form-control borde" v-model="user.contrasena"
+                                placeholder="Contraseña">
+                        </div>
+                        <div class="row mb-4">
+                            <input type="submit" class="btn btn-dark borde" value="Iniciar Sesión">
+                        </div>
                     </form>
                 </div>
-                <div class="col-4"></div>
             </div>
         </div>
     </div>
@@ -42,7 +46,7 @@ export default {
                     let dataLogin = {
                         token: result.data.token,
                         user: this.user.user,
-                        cedula:result.data.user_id
+                        cedula: result.data.user_id
                     }
                     this.$emit('completedLogin', dataLogin);
                 })
@@ -53,7 +57,7 @@ export default {
                 });
         }
     },
-    created(){
+    created() {
         document.title = "Iniciar sesión"
     }
 }

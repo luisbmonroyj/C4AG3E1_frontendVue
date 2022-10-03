@@ -87,7 +87,7 @@ export default {
       this.$router.push({ name: 'contactUs' })
     },
     loadWhoAreWe: function () {
-      this.$router.push({ name: 'home' })
+      this.$router.push({ name: 'about' })
     },
     loadSignUp: function () {
       this.$router.push({ name: 'signup' })
@@ -179,4 +179,13 @@ body {
   width: 20%;
   text-align: center;
 }
+input.borde{
+    border-radius: 30px;
+}
+
+nav.menu{
+    position: sticky;
+    top: 0;
+}
+
 </style>
