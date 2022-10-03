@@ -1,7 +1,6 @@
 <template>
     <div class="container my-5 ">
         <h1>Candidatos</h1>
-        <h2 class="my-5">Bienvenido</h2>
         <div class="row">
             <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
                 <h2 class="mb-5 border-bottom">Administrar Candidatos</h2>
@@ -92,11 +91,7 @@
                             <td>{{ item.nombre }}</td>
                             <td>{{ item.resolucion }}</td>
                             <td>{{ item.id_partido }}</td>
-                            <!-- <td><img src={{ loadImage(item.foto) }}/></td> -->
-                            <td><img src="data:image/png;base64, xx"/></td>
-                            <!-- <td><img v-bind:src="'data:image/png;base64, '+ {{ item.foto }}"></td> -->
-                            <!-- <td><img :src="`data:image/png;base64, {{ item.foto }}`" /> </td>     -->
-                            <!-- <td scope="row">{{ item.date_time.slice(11, 16) }}</td> -->
+                            <td> <img :src="`data:image/png;base64, ${item.foto}`"> </td>
                             <td scope="row" v-on:click="loadEditarCandidato(item.cedula)">
                                 <button type="button" class="btn btn btn-outline-success py-1 px-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" 

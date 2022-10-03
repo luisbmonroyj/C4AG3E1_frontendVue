@@ -1,51 +1,25 @@
 <template>
-    <div class="container">
+    <div class="container text-center">
+        <h2>Registrate</h2>
+        <br>
         <div class="row">
-            <div class="col-4">
-            </div>
-            <div class="col-4 border my-5 card">
-                <h2 class="my-5">Registrate</h2>
-                <form v-on:submit.prevent="processSignUp">
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="email" class="form-control" placeholder="Mail@mail.com" v-model="user.user"
-                                required>
-                        </div>
-                        <div class="col-1"></div>
+            <div class="col-md-6 offset-md-3">
+                <form action="" v-on:submit.prevent="processSignUp" class="row g-3">
+                    <div class="row mb-3">
+                        <input type="number" class="form-control borde" v-model="user.cedula" placeholder="Cedula">
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="password" class="form-control" placeholder="Contraseña"
-                                v-model="user.contrasena" required>
-                        </div>
-                        <div class="col-1"></div>
+                    <div class="row mb-3">
+                        <input type="email" class="form-control borde" id="email" v-model="user.user"
+                            placeholder="Email">
                     </div>
-
-                    <br>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="number" class="form-control" placeholder="3002221100" v-model="user.cedula"
-                                required>
-                        </div>
-                        <div class="col-1"></div>
+                    <div class="row mb-3">
+                        <input type="password" class="form-control borde" v-model="user.contrasena"
+                            placeholder="Contraseña">
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="checkbox" class="" required id="chk" unchecked>
-                            <label for="chk">&nbsp;&nbsp; Acepto los <a href="">términos</a></label>
-                        </div>
-                        <div class="col-1"></div>
+                    <div class="row mb-4">
+                        <input type="submit" class="btn btn-dark borde" value="Registrar">
                     </div>
-                    <button type="submit" class="btn btn-primary my-5">Registrarse</button>
                 </form>
-            </div>
-            <div class="col-4">
             </div>
         </div>
     </div>

@@ -1,7 +1,6 @@
 <template>
     <div class="container my-5 ">
         <h1>Mesas</h1>
-        <h2 class="my-5">Bienvenido</h2>
         <div class="column">
             <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
                 <h2 class="mb-5 border-bottom">Administrar Mesas</h2>
