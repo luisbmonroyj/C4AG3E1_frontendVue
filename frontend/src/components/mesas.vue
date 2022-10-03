@@ -77,7 +77,7 @@
                                     </svg>
                                 </button>
                             </td>
-                            <td scope="row" v-on:click="loadEliminarCandidato(item.cedula)">
+                            <td scope="row" v-on:click="loadEliminarMesa(item.id)">
                                 <button type="button"
                                 class="btn btn-outline-danger py-1 px-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
@@ -128,7 +128,7 @@ export default {
                     this.$emit('logOut');
                 });
         },
-        loadEliminarCandidato: async function (cedula_candidato) {
+        loadEliminarMesa: async function (id_mesa) {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
                 return;
@@ -139,7 +139,7 @@ export default {
                 axios.delete(
                     `V1/mesas/delete`,
                     {headers: { 'Authorization': `Bearer ${token}` },
-                     data: {"cedula":cedula_candidato}
+                     data: {"id":id_mesa}
                     },
                 )
                     .then(() => {
@@ -165,14 +165,13 @@ export default {
                 return;
             }
             let token = localStorage.getItem("token");
-            let url = "V1/mesa/create"
+            let url = "V1/mesas/create"
             let mesasData = {
-                "cedulas_inscritas": this.mesa.cedulas
+                "cedulas_inscritas": parseInt(this.mesa.cedulas)
             };
-            const formData = new FormData(mesasData);
             //formData.append('cedulas_inscritas', this.mesa.cedulas);
-            console.log(formData);
-            axios.post(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
+            console.log(mesasData);
+            axios.post(url, mesasData, { headers: { 'Authorization': `Bearer ${token}` } },
             )
                 .then((result) => {
                     alert("Mesa creada");
