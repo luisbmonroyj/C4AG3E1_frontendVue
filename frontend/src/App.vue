@@ -23,7 +23,7 @@
                         <a class="nav-link" v-on:click="loadLogin"  v-if="!is_Auth">Inicio de Sesión</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" v-on:click="loadAccount" v-if="is_Auth">Mi cuenta</a>
+                        <a class="nav-link" v-on:click="loadAccount" v-if="is_Admin">Administración</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" v-on:click="loadLogOut" v-if="is_Auth">Cerrar Sesión</a>
@@ -50,17 +50,25 @@
   </div>
   </template>
   <script>
+  
+  import jwt_decode from 'jwt-decode';
+
   export default {
   name: 'App',
   data: function(){
     activeItem:0;
       return {
-        is_Auth: false
+        is_Auth: false,
+        is_Admin:false
       }
   },
   components: {},
   methods:{
     created: function(){
+      document.title = "Registraduria";
+      this.$router.push({name:'home'})
+      this.verifyAuth();
+      
     },
     loadLogin: function(){
         this.$router.push({name:'login'})
@@ -70,20 +78,42 @@
       },
   verifyAuth: function(){
         this.is_Auth = localStorage.getItem('is_Auth') || false;
-        if(this.is_Auth==false)
+        console.log(this.is_Auth)
+        this.is_Admin = localStorage.getItem('is_Admin') || false;
+        console.log(this.is_Admin)
+        if(this.is_Auth==false){
           //this.$router.push({name:'home'})
-          console.log("False")
-        else
-          this.$router.push({name: 'account'})
-          //console.log("True")
+          this.$router.push({name:'home'})
+          console.log("No ha iniciado sesion")
+        }
+        else{ 
+          if (this.is_Admin == false){
+            console.log("no es administrador")
+            this.$router.push({name:'resultados'})
+            //this.$router.push({name: 'resultados'})
+          }
+          else{
+            console.log("no es administrador") 
+            this.$router.push({name:'account'})
+          }
+        }
+        //console.log("True")
       },
       loadAccount: function(){
         this.$router.push({name:'account'})
       },
   completedLogin: function(data){
-        console.log(data);
+        //console.log(data);
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', data.user);
+        let tokenDecoded = jwt_decode(data.token)
+        //console.log(tokenDecoded.sub.id_rol.nombre);
+        if (tokenDecoded.sub.id_rol.nombre == "registrador nacional"){
+          localStorage.setItem('is_Admin', true);
+        }
+        else{
+          localStorage.setItem('is_Admin', false);
+        }
         localStorage.setItem('is_Auth', true);
         this.verifyAuth();
       },

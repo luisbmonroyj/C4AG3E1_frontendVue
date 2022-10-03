@@ -38,19 +38,19 @@
             </div>
             <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
                 <h2 class="mb-5 border-bottom">Editar Candidatos</h2>
-                <form class="my-3" v-on:submit.prevent="createCandidato">
+                <form class="my-3" v-on:submit.prevent="editarCandidato" >
                     <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
-                    <input type="text" class="form-control" placeholder="000000" v-model="candidatoEdit.cedula" id="editcedula" disabled >
+                    <input type="text" class="form-control" placeholder="000000" id="editcedula" disabled >
                     <br>
-                    <input type="text" class="form-control" placeholder="Apellido" v-model="candidatoEdit.apellido" id="editapellido">
+                    <input type="text" class="form-control" placeholder="Apellido" id="editapellido">
                     <br>
-                    <input type="text" class="form-control" placeholder="Nombre" v-model="candidatoEdit.nombre" id="editnombre">
+                    <input type="text" class="form-control" placeholder="Nombre" id="editnombre">
                     <br>
-                    <input type="text" class="form-control" placeholder="Resolucion" v-model="candidatoEdit.resolucion" id="editresolucion">
+                    <input type="text" class="form-control" placeholder="Resolucion" id="editresolucion">
                     <br>
                     <input type="file" class="form-control" ref="file" v-on:change="uploadFile2()">
                     <br>
-                    <input type="list" list="partidos" class="form-control" placeholder="partido" v-model="candidatoEdit.id_partido" id="editpartido">
+                    <input type="list" list="partidos" class="form-control" placeholder="partido" id="editpartido">
                     <datalist id="partidos">
                         <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
                     </datalist>
@@ -128,7 +128,6 @@
 
 <script>
 import axios from 'axios';
-import jwt_decode from 'jwt-decode';
 export default {
     name: 'account',
     data: function () {
@@ -146,11 +145,6 @@ export default {
             },
             partidos: [],
             candidatoEdit: {
-                cedula: "",
-                apellido: "",
-                nombre: "",
-                resolucion: "",
-                id_partido: "",
                 foto: ({images: null})
             }
         }
@@ -159,7 +153,7 @@ export default {
         uploadFile() {
             this.candidato.foto = this.$refs.file.files[0];
         },
-        uploadFile() {
+        uploadFile2() {
             this.candidatoEdit.foto = this.$refs.file.files[0];
         },
         getCandidatos: async function () {
@@ -216,7 +210,17 @@ export default {
                     document.getElementById("editnombre").value = candidato.nombre;
                     document.getElementById("editapellido").value = candidato.apellido;
                     document.getElementById("editresolucion").value = candidato.resolucion;
-                    document.getElementById("editpartido").value = candidato.id_partido;
+                    /*
+                    let id_partido_candidato = candidato.id_partido
+                    
+                    var id_part="";
+                    this.partidos.forEach(function (combo) {
+                        if (combo.id == id_partido_candidato){
+                            id_part = combo.nombre;
+                        }
+                    })
+                    */
+                   document.getElementById("editpartido").value = candidato.id_partido;
                 }
             })
             
@@ -283,12 +287,42 @@ export default {
                         alert("Error al crear el candidato");
                 })
         },
+        editarCandidato: async function () {
+            if (localStorage.getItem("token") === null) {
+                this.$emit('logOut');
+                return;
+            }
+            let token = localStorage.getItem("token");
+            let partidoDeCandidato = document.getElementById("editpartido").value;
+            //console.log(partidoDeCandidato)
+            var id_part=0;
+            this.partidos.forEach(function (combo) {
+                if (combo.nombre == partidoDeCandidato){
+                    id_part = combo.id;
+                }
+            })
+            let url = "V1/candidato/update?cedula="+document.getElementById("editcedula").value+
+            "&nombre="+document.getElementById("editnombre").value+"&apellido="+document.getElementById("editapellido").value
+            +"&resolucion="+document.getElementById("editresolucion").value+"&id_partido="+id_part;
+            const formData = new FormData();
+            formData.append('file', this.candidatoEdit.foto);
+            axios.patch(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
+            )
+                .then((result) => {
+                    alert("Candidato modificado");
+                    this.getCandidatos();
+                })
+                .catch((error) => {
+                    console.log(error);
+                        alert("Error al editar el candidato");
+                })
+        },
     },
     created: async function () {
         document.title = "Cuenta"
         //this.partidos = ['1','2','3','4'];
         this.getPartidos();
-        console.log(this.partidos);
+        //console.log(this.partidos);
         this.getCandidatos();
     }
 

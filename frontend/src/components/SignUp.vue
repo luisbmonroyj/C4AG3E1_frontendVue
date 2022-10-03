@@ -84,14 +84,14 @@ export default {
                         { headers: {} }
                     )
                         .then((result) => {
-                            console.log(result)
+                            //console.log(result)
                             let dataLogin = {
                                 token: result.data.token,
                                 user: dataSignUp.user
                             }
-                            console.log("1")
+                            //console.log("1")
                             this.$emit('completedLogin', dataLogin);
-                            console.log("2")
+                            //console.log("2")
                         })
                         .catch((error) => {
                             if (error.response.status == '401') {
