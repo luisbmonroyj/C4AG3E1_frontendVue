@@ -5,7 +5,6 @@
     export default{
         name:'home',
     created(){
-        console.log("Home Cargado")
     }
     }
 </script>

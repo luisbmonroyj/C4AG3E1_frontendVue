@@ -5,7 +5,6 @@
     export default{
         name:'resultados',
     created(){
-        console.log("resultados Cargado")
     }
     }
 </script>
