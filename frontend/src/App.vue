@@ -118,6 +118,7 @@ export default {
       this.$router.push({ name: 'account' })
     },
     verifyAuth: function () {
+      console.log("x")
       this.is_Auth = localStorage.getItem('is_Auth') || 0;
       this.is_Admin = localStorage.getItem('is_Admin') || 0;
       if (this.is_Auth == 0) {

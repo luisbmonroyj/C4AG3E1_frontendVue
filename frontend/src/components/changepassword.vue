@@ -83,7 +83,7 @@ export default {
                     let url = "V1/usuario";
                     let userData = {
                         'user':this.user.username,
-                        'cedula':this.user.cedula,
+                        'cedula':parseInt(this.user.cedula),
                         'contrasena': this.user.contrasena
                     }
                     /*
@@ -99,12 +99,15 @@ export default {
                     console.log("datos de formData");
                     console.log(formData);
                     */
-                    axios.patch(url, userData, { headers: { 'Authorization': `Bearer ${token}` } },
+                   console.log(userData)
+                    axios.patch(url, 
+                                userData,
+                                { headers: { 'Authorization': `Bearer ${token}` } },
                     )
                     .then((result) => {
                         alert("Contraseña modificada. Debe volver a iniciar sesión");
                         localStorage.clear();
-                        //this.$emit('logOut')
+                        //this.$router.push({ name: 'root' })
                     })
                     .catch((error) => {
                         console.log(error);
