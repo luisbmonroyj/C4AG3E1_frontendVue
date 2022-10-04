@@ -155,7 +155,7 @@
 <script>
 import axios from 'axios';
 export default {
-    name: 'account',
+    name: 'candidato',
     data: function () {
         return {
             name: "",
@@ -180,7 +180,7 @@ export default {
             this.candidato.foto = this.$refs.file.files[0];
         },
         uploadFile2() {
-            this.candidatoEdit.foto = this.$refs.file.files[0];
+            this.candidatoEdit.foto = this.$refs.file2.files[0];
         },
         getCandidatos: async function () {
             if (localStorage.getItem("token") === null) {
@@ -216,12 +216,6 @@ export default {
                     this.$emit('logOut');
                 });
         },
-        /*
-        loadImage: function (imagen) {
-            x = "'data:image/png;base64, '" + imagen
-            return x; 
-        },
-        */
         loadEditarCandidato: function (cedula_candidato) {
             this.candidatos.forEach(function (candidato) {
                 if (candidato.cedula == cedula_candidato) {
@@ -229,16 +223,6 @@ export default {
                     document.getElementById("editnombre").value = candidato.nombre;
                     document.getElementById("editapellido").value = candidato.apellido;
                     document.getElementById("editresolucion").value = candidato.resolucion;
-                    /*
-                    let id_partido_candidato = candidato.id_partido
-                    
-                    var id_part="";
-                    this.partidos.forEach(function (combo) {
-                        if (combo.id == id_partido_candidato){
-                            id_part = combo.nombre;
-                        }
-                    })
-                    */
                     document.getElementById("editpartido").value = candidato.id_partido;
                 }
             })
@@ -336,6 +320,7 @@ export default {
         },
     },
     created: function () {
+        this.$emit('verifyAuth');
         document.title = "Candidatos"
         this.getPartidos();
         this.getCandidatos();

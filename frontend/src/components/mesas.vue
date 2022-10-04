@@ -70,7 +70,7 @@
 import { isTemplateElement } from '@babel/types';
 import axios from 'axios';
 export default {
-    name: 'account',
+    name: 'mesas',
     data: function () {
         return {
             name: "",
@@ -142,8 +142,6 @@ export default {
             let mesasData = {
                 "cedulas_inscritas": parseInt(this.mesa.cedulas)
             };
-            //formData.append('cedulas_inscritas', this.mesa.cedulas);
-            console.log(mesasData);
             axios.post(url, mesasData, { headers: { 'Authorization': `Bearer ${token}` } },
             )
                 .then((result) => {
@@ -176,24 +174,11 @@ export default {
                     console.log(error);
                     alert("Error al editar el mesa");
                 })
-            /*
-            let partidoDeCandidato = document.getElementById("editpartido").value;
-            var id_part=0;
-            this.partidos.forEach(function (combo) {
-                if (combo.nombre == partidoDeCandidato){
-                    id_part = combo.id;
-    }
-})
-"&nombre="+document.getElementById("editnombre").value+"&apellido="+document.getElementById("editapellido").value
-+"&resolucion="+document.getElementById("editresolucion").value+"&id_partido="+id_part;
-const formData = new FormData();
-formData.append('file', this.candidatoEdit.foto);
-*/
         },
     },
     created: function () {
+        this.$emit('verifyAuth');        
         document.title = "Mesas"
-        //this.getPartidos();
         this.getMesas();
     }
 

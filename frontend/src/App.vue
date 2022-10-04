@@ -14,11 +14,14 @@
               <a class="nav-link" v-on:click="loadPartidos" v-if="is_Admin == 1">Partidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" v-on:click="loadAccount" v-if="is_Admin == 1">Candidatos</a>
+              <a class="nav-link" v-on:click="loadCandidato" v-if="is_Admin == 1">Candidatos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" v-on:click="loadResultados" v-if="is_Auth == 1">Resultados</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" v-on:click="loadJurados" v-if="is_Jury == 1">Jurados</a>
+            </li>            
           </ul>
         </div>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -74,7 +77,8 @@ export default {
   data: function () {
     return {
       is_Auth: 0,
-      is_Admin: 0
+      is_Admin: 0,
+      is_Jury: 0
     }
   },
   components: {},
@@ -98,6 +102,9 @@ export default {
     loadLogin: function () {
       this.$router.push({ name: 'login' })
     },
+    loadJurados: function () {
+      this.$router.push({ name: 'jurado' })
+    },
     loadLogOut: function () {
       let logOutConfirm = confirm("¿Desea cerrar la sesión?")
       if (logOutConfirm) {
@@ -114,24 +121,27 @@ export default {
     loadMesas: function () {
       this.$router.push({ name: 'mesas' })
     },
-    loadAccount: function () {
-      this.$router.push({ name: 'account' })
+    loadCandidato: function () {
+      this.$router.push({ name: 'candidato' })
     },
     loadPartidos: function () {
       this.$router.push({ name: 'partido' })
     },
     verifyAuth: function () {
-      console.log("x")
       this.is_Auth = localStorage.getItem('is_Auth') || 0;
       this.is_Admin = localStorage.getItem('is_Admin') || 0;
+      this.is_Jury = localStorage.getItem('is_Jury') || 0;
       if (this.is_Auth == 0) {
         this.$router.push({ name: 'home' });
       }
+      else if (this.is_Admin == 1) {
+        this.$router.push({ name: 'candidato' });
+      }
+      else if (this.is_Jury == 1) {
+        this.$router.push({ name: 'jurado' });
+      }
       else if (this.is_Admin == 0) {
         this.$router.push({ name: 'resultados' });
-      }
-      else if (this.is_Admin == 1) {
-        this.$router.push({ name: 'account' });
       }
       else {
         console.log("no es nada")
@@ -144,9 +154,15 @@ export default {
       let tokenDecoded = jwt_decode(data.token)
       if (tokenDecoded.sub.id_rol.nombre == "registrador nacional") {
         localStorage.setItem('is_Admin', 1);
+        localStorage.setItem('is_Jury', 0);
+      }
+      else if (tokenDecoded.sub.id_rol.nombre == "jurado") {
+        localStorage.setItem('is_Admin', 0);
+        localStorage.setItem('is_Jury', 1);
       }
       else {
         localStorage.setItem('is_Admin', 0);
+        localStorage.setItem('is_Jury', 0);
       }
       localStorage.setItem('is_Auth', 1);
       this.verifyAuth();

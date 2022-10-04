@@ -27,6 +27,7 @@
     export default{
         name:'home',
     created(){
+        document.title = "Registraduria"
     }
     }
 </script>
