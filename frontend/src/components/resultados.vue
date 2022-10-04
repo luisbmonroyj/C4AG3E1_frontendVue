@@ -45,7 +45,30 @@
                         </tr>
                     </tbody>
                 </table>
-                <h2 v-else="candidatos == 0" class="my-5">No hay candidatos</h2>
+                <h2 v-else="resultCandidato == 0" class="my-5">No hay resultados</h2>
+
+            </div>
+        </div>
+    <div class="column">
+            <h3>Participación mesas</h3>
+            <p>Seleccionar Mesa</p>
+            <br>
+            <div class="col-sm-12 col-md-8 col-ls-8 col-xl-8">
+                <table class="table table-hover table-striped" v-if="resultMesas.length > 0">
+                    <thead class="">
+                        <tr class="" style="background-color:rgba(56, 113, 176, 0.4)">
+                            <th>id_mesa</th>
+                            <th>Participación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, idx) in resultMesas">
+                            <td>{{ item.id_mesa }}</td>
+                            <td>{{ item.Participacion }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 v-else="resultMesas == 0" class="my-5">No hay resultados</h2>
 
             </div>
         </div>
@@ -63,7 +86,8 @@ export default {
             resultCandidato: [],
             resultadosCandidato1: {
                 mesa: "",
-            }
+            },
+            resultMesas: [],
         }
     },
     methods: {
@@ -94,11 +118,29 @@ export default {
                     console.log(error)
                 });
             }
+        },
+
+        getResultados2: async function () {
+            if (localStorage.getItem("token") === null) {
+                this.$emit('logOut');
+                return;
+            }
+            let token = localStorage.getItem("token");
+            axios.get('V1/resultado/listar_participacion_mesas',
+                { headers: { 'Authorization': `Bearer ${token}` } })
+                .then((result) => {
+                    this.resultMesas = result.data;
+                    this.loaded = true;
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
         }
     },
     created: function () {
         document.title = "Resultados"
         this.getResultados1(null);
+        this.getResultados2();
     }
 
 }
