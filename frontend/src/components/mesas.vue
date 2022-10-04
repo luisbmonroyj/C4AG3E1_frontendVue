@@ -9,26 +9,9 @@
                     <label>Cedulas inscritas</label>
                     <input type="text" class="form-control" placeholder="000000" v-model="mesa.cedulas">
                     <br>
-                    <input type="text" class="form-control" v-model="mesa.id" disabled>
-                    <br>
-                <!--                     
-                    <input type="text" class="form-control" placeholder="Nombre" v-model="mesa.nombre">
-                    <br>
-                    <input type="text" class="form-control" placeholder="Resolucion" v-model="mesa.resolucion">
-                    <br>
-                    <input type="file" class="form-control" ref="file" v-on:change="uploadFile()">
-                    <br>
-                    <input type="list" list="partidos" class="form-control" placeholder="partido" v-model="mesa.id_partido">
-                    <datalist id="partidos">
-                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
-                    </datalist>
-                    <br>
-                 -->
-
                     <div class="row">
                         <div class="col-6">
-                            <button type="submit" class="btn btn-outline-secondary ">
-                                Crear Mesa
+                            <button type="submit" innerText="Crear Mesa" class="btn btn-outline-secondary ">
                             </button>
                         </div>
                         <div class="col-6">
@@ -59,32 +42,39 @@
                     </thead>
                     <tbody>
                         <tr v-for="(item, idx) in mesas">
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.Cedulas_inscritas }}</td>
+                            <td>
+                                {{ item.id }}
+                            </td>
+                            <td>
+                                <!-- {{ item.Cedulas_inscritas }} -->
+
+                                <input type="number" class="form-control" v-model=item.Cedulas_inscritas>
+                            </td>
                             <!-- 
                             <td>{{ item.nombre }}</td>
                             <td>{{ item.resolucion }}</td>
                             <td>{{ item.id_partido }}</td>
                             <td><img src="data:image/png;base64, xx"/></td>
                             -->
-                            <td scope="row" v-on:click="loadEditarCandidato(item.cedula)">
+                            <td scope="row" v-on:click="editarMesa(item.id, item.Cedulas_inscritas)">
                                 <button type="button" class="btn btn btn-outline-success py-1 px-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                                         class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z">
+                                        <path
+                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z">
                                         </path>
                                     </svg>
                                 </button>
                             </td>
                             <td scope="row" v-on:click="loadEliminarMesa(item.id)">
-                                <button type="button"
-                                class="btn btn-outline-danger py-1 px-2">
+                                <button type="button" class="btn btn-outline-danger py-1 px-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                                         class="bi bi-trash3-fillb" viewBox="0 0 16 16">
                                         <path
                                             d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z">
                                         </path>
-                                    </svg></button></td>
+                                    </svg></button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -95,6 +85,7 @@
 </template>
 
 <script>
+import { isTemplateElement } from '@babel/types';
 import axios from 'axios';
 export default {
     name: 'account',
@@ -104,7 +95,7 @@ export default {
             mesas: [],
             loaded: false,
             mesa: {
-                id: "id_mesa",
+                id: "",
                 cedulas: 0
             }
         }
@@ -137,8 +128,9 @@ export default {
             if (conf === true) {
                 axios.delete(
                     `V1/mesas/delete`,
-                    {headers: { 'Authorization': `Bearer ${token}` },
-                     data: {"id":id_mesa}
+                    {
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        data: { "id": id_mesa }
                     },
                 )
                     .then(() => {
@@ -181,24 +173,17 @@ export default {
                     alert("Error al crear la mesa");
                 })
         },
-        editarCandidato: async function () {
+        editarMesa: async function (mesaId, cedulas) {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
                 return;
             }
             let token = localStorage.getItem("token");
-            let partidoDeCandidato = document.getElementById("editpartido").value;
-            var id_part=0;
-            this.partidos.forEach(function (combo) {
-                if (combo.nombre == partidoDeCandidato){
-                    id_part = combo.id;
-                }
-            })
-            let url = "V1/mesa/update?cedula="+document.getElementById("editcedula").value+
-            "&nombre="+document.getElementById("editnombre").value+"&apellido="+document.getElementById("editapellido").value
-            +"&resolucion="+document.getElementById("editresolucion").value+"&id_partido="+id_part;
-            const formData = new FormData();
-            formData.append('file', this.candidatoEdit.foto);
+            let url = "V1/mesas/update";
+            let formData = {
+                "id": mesaId,
+                "cedulas_inscritas": cedulas
+            }
             axios.patch(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
             )
                 .then((result) => {
@@ -209,6 +194,19 @@ export default {
                     console.log(error);
                     alert("Error al editar el mesa");
                 })
+            /*
+            let partidoDeCandidato = document.getElementById("editpartido").value;
+            var id_part=0;
+            this.partidos.forEach(function (combo) {
+                if (combo.nombre == partidoDeCandidato){
+                    id_part = combo.id;
+    }
+})
+"&nombre="+document.getElementById("editnombre").value+"&apellido="+document.getElementById("editapellido").value
++"&resolucion="+document.getElementById("editresolucion").value+"&id_partido="+id_part;
+const formData = new FormData();
+formData.append('file', this.candidatoEdit.foto);
+*/
         },
     },
     created: function () {
