@@ -64,11 +64,11 @@
                             <div class="col separar">
                                 <div class="row mb-3">
                                     <input type="number" class="form-control borde" id="editcedula"
-                                        v-model="candidato.cedula" placeholder="Cédula" disabled>
+                                        placeholder="Cédula" disabled>
                                 </div>
                                 <div class="row mb-3">
                                     <input type="text" class="form-control borde" id="editnombre"
-                                        v-model="candidato.nombre" placeholder="Nombres">
+                                        placeholder="Nombres">
                                 </div>
 
                                 <div class="row mb-3">
@@ -82,11 +82,11 @@
                             <div class="col">
                                 <div class="row mb-3">
                                     <input type="text" class="form-control borde" id="editresolucion"
-                                        v-model="candidato.resolucion" placeholder="Resolución">
+                                        placeholder="Resolución">
                                 </div>
                                 <div class="row mb-3">
                                     <input type="text" class="form-control borde" id="editapellido"
-                                        v-model="candidato.apellido" placeholder="Apellidos">
+                                        placeholder="Apellidos">
                                 </div>
                                 <div class="row mb-4">
                                     <input type="file" class="form-control" ref="file2" v-on:change="uploadFile2()">
@@ -296,15 +296,9 @@ export default {
             }
             let token = localStorage.getItem("token");
             let partidoDeCandidato = document.getElementById("editpartido").value;
-            var id_part = 0;
-            this.partidos.forEach(function (combo) {
-                if (combo.nombre == partidoDeCandidato) {
-                    id_part = combo.id;
-                }
-            })
             let url = "V1/candidato/update?cedula=" + document.getElementById("editcedula").value +
                 "&nombre=" + document.getElementById("editnombre").value + "&apellido=" + document.getElementById("editapellido").value
-                + "&resolucion=" + document.getElementById("editresolucion").value + "&id_partido=" + id_part;
+                + "&resolucion=" + document.getElementById("editresolucion").value + "&id_partido=" + document.getElementById("editpartido").value;
             const formData = new FormData();
             formData.append('file', this.candidatoEdit.foto);
             axios.patch(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
