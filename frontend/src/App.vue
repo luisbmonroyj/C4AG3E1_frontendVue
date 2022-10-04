@@ -117,6 +117,9 @@ export default {
     loadAccount: function () {
       this.$router.push({ name: 'account' })
     },
+    loadPartidos: function () {
+      this.$router.push({ name: 'partido' })
+    },
     verifyAuth: function () {
       console.log("x")
       this.is_Auth = localStorage.getItem('is_Auth') || 0;

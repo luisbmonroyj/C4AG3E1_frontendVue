@@ -9,6 +9,7 @@ import changepassword from './components/changepassword.vue'
 import contactUs from './components/contactUs.vue'
 import mesas from './components/mesas.vue'
 import about from './components/about.vue'
+import partido from './components/partido.vue'
 
 const routes = [
   {
@@ -60,6 +61,11 @@ const routes = [
     path: '/about',
     name: "about",
     component: about
+  },
+  {
+    path: '/partido',
+    name: 'partido',
+    component: partido
   }
 ]
 
