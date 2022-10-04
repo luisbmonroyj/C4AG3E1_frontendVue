@@ -1,5 +1,29 @@
 <template>
-<h1>Jurados</h1>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form action="" v-on:submit.prevent="createResultado" class="row g-3">
+                    <div class="row mb-3">
+                        <label>Seleccione Mesa</label>
+                        <select id="partidos" class="form-select borde" v-model="resultado.id_mesa">
+                            <option v-for="(item,idx) in mesas">{{ item.id }}</option>
+                        </select>
+                    </div>
+                    <div class="row mb-3">
+                        <label>Seleccione Candidato</label>
+                        <select id="partidos" class="form-select borde" v-model="resultado.cedula_candidato">
+                            <option v-for="(item,idx) in candidatos">{{ item.cedula }}</option>
+                        </select>
+                    </div>
+                    <div class="row mb-3">
+                        <label>Votos</label>
+                        <input type="number" class="form-control borde" v-model="resultado.votos" placeholder="0">
+                    </div>
+                    <div class="row mb-4">
+                        <input type="submit" class="btn btn-dark borde" value="Enviar Resultado">
+                    </div>
+                </form>
+            </div>
+        </div>
 </template>
 
 <script>
@@ -20,7 +44,7 @@
             }
         },
         methods: {
-            /*getCandidatos: async function () {
+            getCandidatos: async function () {
                 if (localStorage.getItem("token") === null) {
                     this.$emit('logOut');
                     return;
@@ -46,7 +70,7 @@
                 axios.get('V1/mesas/get',
                     { headers: { 'Authorization': `Bearer ${token}` } })
                     .then((result) => {
-                        this.mesas = result.data.Partidos;
+                        this.mesas = result.data.mesas;
                         this.loaded = true;
                     })
                     .catch((error) => {
@@ -60,35 +84,29 @@
                     return;
                 }
                 let token = localStorage.getItem("token");
-                let partidoDeCandidato = this.candidato.id_partido;
-                var id_part = 0;
-                this.partidos.forEach(function (combo) {
-                    if (combo.nombre == partidoDeCandidato) {
-                        id_part = combo.id;
+                let url = "V1/resultado/create";
+                let dataResultado = {
+                        cedula_candidato: this.resultado.cedula_candidato,
+                        id_mesa: this.resultado.id_mesa,
+                        votos: this.resultado.votos,
                     }
-                })
-                let url = "V1/candidato/create?cedula=" + this.candidato.cedula +
-                    "&nombre=" + this.candidato.nombre + "&apellido=" + this.candidato.apellido
-                    + "&resolucion=" + this.candidato.resolucion + "&id_partido=" + id_part;
-                const formData = new FormData();
-                formData.append('file', this.candidato.foto);
-                axios.post(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
+                axios.post(url, dataResultado, { headers: { 'Authorization': `Bearer ${token}` } },
                 )
                     .then((result) => {
-                        alert("Candidato creado");
+                        alert("Resultado Enviado creado");
                         this.getCandidatos();
                     })
                     .catch((error) => {
                         console.log(error);
-                        alert("Error al crear el candidato");
+                        alert("Error al enviar el resultado");
                     })
-            }*/
+            }
         },
         created: function () {
-            /*this.$emit('verifyAuth');
-            document.title = "Candidatos"
+            this.$emit('verifyAuth');
+            document.title = "Jurados"
             this.getMesas();
-            this.getCandidatos();*/
+            this.getCandidatos();
         }
     
     }
