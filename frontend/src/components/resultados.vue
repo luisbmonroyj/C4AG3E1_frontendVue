@@ -63,7 +63,7 @@
                     <tbody>
                         <tr v-for="(item, idx) in resultMesas">
                             <td>{{ item.id_mesa }}</td>
-                            <td>{{ item.Participacion }}</td>
+                            <td>{{ redondear(item.Participacion) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -129,7 +129,7 @@
                         <tr v-for="(item, idx) in resultCongreso">
                             <td> <img :src="`data:image/png;base64, ${item.foto}`" width="100" height="100"> </td>
                             <td>{{ item.partido }}</td>
-                            <td>{{ item.Participacion }}</td>
+                            <td>{{ redondear(item.Participacion) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -161,6 +161,10 @@ export default {
         }
     },
     methods: {
+        redondear: function (numero) {
+            numero = parseFloat(numero) * 100 
+            return numero.toFixed(2) + "%";
+        },
         getResultados1: async function (mesa) {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
