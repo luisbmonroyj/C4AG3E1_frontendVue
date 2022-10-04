@@ -10,6 +10,7 @@ import contactUs from './components/contactUs.vue'
 import mesas from './components/mesas.vue'
 import about from './components/about.vue'
 import partido from './components/partido.vue'
+import jurado from './components/jurado.vue'
 
 const routes = [
   {
@@ -66,6 +67,11 @@ const routes = [
     path: '/partido',
     name: 'partido',
     component: partido
+  },
+  {
+    path: '/jurado',
+    name: 'jurado',
+    component: jurado
   }
 ]
 
