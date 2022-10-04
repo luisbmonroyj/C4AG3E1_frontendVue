@@ -1,124 +1,155 @@
 <template>
     <div class="container my-5 ">
-        <h1>Candidatos</h1>
-        <div class="row">
-            <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
-                <h2 class="mb-5 border-bottom">Administrar Candidatos</h2>
-                <form class="my-3" v-on:submit.prevent="createCandidato">
-                    <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
-                    <input type="text" class="form-control" placeholder="000000" v-model="candidato.cedula">
-                    <br>
-                    <input type="text" class="form-control" placeholder="Apellido" v-model="candidato.apellido">
-                    <br>
-                    <input type="text" class="form-control" placeholder="Nombre" v-model="candidato.nombre">
-                    <br>
-                    <input type="text" class="form-control" placeholder="Resolucion" v-model="candidato.resolucion">
-                    <br>
-                    <input type="file" class="form-control" ref="file" v-on:change="uploadFile()">
-                    <br>
-                    <input type="list" list="partidos" class="form-control" placeholder="partido" v-model="candidato.id_partido">
-                    <datalist id="partidos">
-                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
-                    </datalist>
+        <div class="container">
+            <div class="row justify-content-evenly">
+                <div class="col-5 text-center ">
+                    <h2>Registrar Candidatos</h2>
                     <br>
                     <div class="row">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-outline-secondary ">
-                                Crear Candidato
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button type="reset" class="btn btn-outline-secondary">
-                                Limpiar Formulario
-                            </button>
-                        </div>
+                        <form action="" v-on:submit.prevent="createCandidato" class="row">
+                            <div class="col separar">
+                                <div class="row mb-3">
+                                    <input type="number" class="form-control borde" id="cedula"
+                                        v-model="candidato.cedula" placeholder="Cédula">
+                                </div>
+                                <div class="row mb-3">
+                                    <input type="text" class="form-control borde" id="nombres"
+                                        v-model="candidato.nombre" placeholder="Nombres">
+                                </div>
+                                <div class="row mb-3">
+                                    <label>Seleccione Partido</label>
+                                    <select id="partidos" class="form-select borde" v-model="candidato.id_partido">
+                                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row mb-3">
+                                    <input type="text" class="form-control borde" id="resolucion"
+                                        v-model="candidato.resolucion" placeholder="Resolución">
+                                </div>
+                                <div class="row mb-3">
+                                    <input type="text" class="form-control borde" id="apellidos"
+                                        v-model="candidato.apellido" placeholder="Apellidos">
+                                </div>
+                                <br>
+                                <div class="row mb-4">
+                                    <input type="file" class="form-control borde" ref="file" v-on:change="uploadFile()">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col separar">
+                                    <div class="row mb-4">
+                                        <input type="submit" class="btn btn-dark borde" value="Registrar Candidatos">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row mb-3">
+                                        <input type="reset" class="btn btn-dark borde" value="Limpiar">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
-            <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
-                <h2 class="mb-5 border-bottom">Editar Candidatos</h2>
-                <form class="my-3" v-on:submit.prevent="editarCandidato" >
-                    <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
-                    <input type="text" class="form-control" placeholder="000000" id="editcedula" disabled >
-                    <br>
-                    <input type="text" class="form-control" placeholder="Apellido" id="editapellido">
-                    <br>
-                    <input type="text" class="form-control" placeholder="Nombre" id="editnombre">
-                    <br>
-                    <input type="text" class="form-control" placeholder="Resolucion" id="editresolucion">
-                    <br>
-                    <input type="file" class="form-control" ref="file" v-on:change="uploadFile2()">
-                    <br>
-                    <input type="list" list="partidos" class="form-control" placeholder="partido" id="editpartido">
-                    <datalist id="partidos">
-                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
-                    </datalist>
+                </div>
+
+
+
+
+                <div class="col-5 text-center ">
+                    <h2>Editar Candidatos</h2>
                     <br>
                     <div class="row">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-outline-secondary ">
-                                Editar Candidato
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button type="reset" class="btn btn-outline-secondary">
-                                Limpiar Formulario
-                            </button>
-                        </div>
+                        <form action="" v-on:submit.prevent="editarCandidato" class="row">
+                            <div class="col separar">
+                                <div class="row mb-3">
+                                    <input type="number" class="form-control borde" id="editcedula"
+                                        v-model="candidato.cedula" placeholder="Cédula" disabled>
+                                </div>
+                                <div class="row mb-3">
+                                    <input type="text" class="form-control borde" id="editnombre"
+                                        v-model="candidato.nombre" placeholder="Nombres">
+                                </div>
+
+                                <div class="row mb-3">
+                                    <input type="list" list="partidos" class="form-control" placeholder="partido"
+                                        id="editpartido">
+                                    <datalist id="partidos1">
+                                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="row mb-3">
+                                    <input type="text" class="form-control borde" id="editresolucion"
+                                        v-model="candidato.resolucion" placeholder="Resolución">
+                                </div>
+                                <div class="row mb-3">
+                                    <input type="text" class="form-control borde" id="editapellido"
+                                        v-model="candidato.apellido" placeholder="Apellidos">
+                                </div>
+                                <div class="row mb-4">
+                                    <input type="file" class="form-control" ref="file2" v-on:change="uploadFile2()">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col separar">
+                                    <div class="row mb-4">
+                                        <input type="submit" class="btn btn-dark borde" value="Editar Candidatos">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="row mb-3">
+                                        <input type="reset" class="btn btn-dark borde" value="Limpiar">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-        <div class="column">
-            <div class="col-sm-12 col-md-8 col-ls-8 col-xl-8">
-                <table class="table table-hover table-striped" v-if="candidatos.length > 0">
-                    <thead class="">
-                        <tr class="" style="background-color:rgba(56, 113, 176, 0.4)">
-                            <th>Cedula</th>
-                            <th>Apellido</th>
-                            <th>Nombre</th>
-                            <th>Resolucion</th>
-                            <th>id_partido</th>
-                            <th>foto</th>
-                            <th>Editar Candidato</th>
-                            <th>Eliminar Candidato</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, idx) in candidatos">
-                            <td>{{ item.cedula }}</td>
-                            <td>{{ item.apellido }}</td>
-                            <td>{{ item.nombre }}</td>
-                            <td>{{ item.resolucion }}</td>
-                            <td>{{ item.id_partido }}</td>
-                            <td> <img :src="`data:image/png;base64, ${item.foto}`"> </td>
-                            <td scope="row" v-on:click="loadEditarCandidato(item.cedula)">
-                                <button type="button" class="btn btn btn-outline-success py-1 px-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" 
-                                        class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </td>
-                            <td scope="row" v-on:click="loadEliminarCandidato(item.cedula)">
-                                <button type="button"
-                                class="btn btn-outline-danger py-1 px-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                                        class="bi bi-trash3-fillb" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z">
-                                        </path>
-                                    </svg></button></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h2 v-else="candidatos == 0" class="my-5">No hay candidatos</h2>
 
-            </div>
+
+
+
+        <h1>Candidatos</h1>
+        <div class="container">
+            <table class="table table-striped table-hover table-bordered" v-if="candidatos.length > 0">
+                <tr v-for="(item, idx) in candidatos">
+                    <td style="width:15%">
+                        <img :src="`data:image/png;base64, ${item.foto}`" style="width:210px; height:210px">
+                    </td>
+                    <td>
+                        <p>{{ item.nombre }} {{ item.apellido }}</p>
+                        <p>Resolución: {{ item.resolucion }}</p>
+                        <p>Partido: {{ item.id_partido }}</p>
+                    </td>
+                    <td scope="row" v-on:click="loadEditarCandidato(item.cedula)">
+                        <button type="button" class="btn btn btn-outline-success py-1 px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z">
+                                </path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td scope="row" v-on:click="loadEliminarCandidato(item.cedula)">
+                        <button type="button" class="btn btn-outline-danger py-1 px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                class="bi bi-trash3-fillb" viewBox="0 0 16 16">
+                                <path
+                                    d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z">
+                                </path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+            <h2 v-else="candidatos == 0" class="my-5">No hay candidatos</h2>
         </div>
     </div>
-    
 </template>
 
 <script>
@@ -136,11 +167,11 @@ export default {
                 nombre: "",
                 resolucion: "",
                 id_partido: "",
-                foto: ({images: null})
+                foto: ({ images: null })
             },
             partidos: [],
             candidatoEdit: {
-                foto: ({images: null})
+                foto: ({ images: null })
             }
         }
     },
@@ -193,7 +224,7 @@ export default {
         */
         loadEditarCandidato: function (cedula_candidato) {
             this.candidatos.forEach(function (candidato) {
-                if (candidato.cedula == cedula_candidato){
+                if (candidato.cedula == cedula_candidato) {
                     document.getElementById("editcedula").value = cedula_candidato;
                     document.getElementById("editnombre").value = candidato.nombre;
                     document.getElementById("editapellido").value = candidato.apellido;
@@ -208,10 +239,10 @@ export default {
                         }
                     })
                     */
-                   document.getElementById("editpartido").value = candidato.id_partido;
+                    document.getElementById("editpartido").value = candidato.id_partido;
                 }
             })
-            
+
         },
         loadEliminarCandidato: async function (cedula_candidato) {
             if (localStorage.getItem("token") === null) {
@@ -223,8 +254,9 @@ export default {
             if (conf === true) {
                 axios.delete(
                     `V1/candidato/delete`,
-                    {headers: { 'Authorization': `Bearer ${token}` },
-                     data: {"cedula":cedula_candidato}
+                    {
+                        headers: { 'Authorization': `Bearer ${token}` },
+                        data: { "cedula": cedula_candidato }
                     },
                 )
                     .then(() => {
@@ -251,15 +283,15 @@ export default {
             }
             let token = localStorage.getItem("token");
             let partidoDeCandidato = this.candidato.id_partido;
-            var id_part=0;
+            var id_part = 0;
             this.partidos.forEach(function (combo) {
-                if (combo.nombre == partidoDeCandidato){
+                if (combo.nombre == partidoDeCandidato) {
                     id_part = combo.id;
                 }
             })
-            let url = "V1/candidato/create?cedula="+this.candidato.cedula+
-            "&nombre="+this.candidato.nombre+"&apellido="+this.candidato.apellido
-            +"&resolucion="+this.candidato.resolucion+"&id_partido="+id_part;
+            let url = "V1/candidato/create?cedula=" + this.candidato.cedula +
+                "&nombre=" + this.candidato.nombre + "&apellido=" + this.candidato.apellido
+                + "&resolucion=" + this.candidato.resolucion + "&id_partido=" + id_part;
             const formData = new FormData();
             formData.append('file', this.candidato.foto);
             axios.post(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
@@ -280,15 +312,15 @@ export default {
             }
             let token = localStorage.getItem("token");
             let partidoDeCandidato = document.getElementById("editpartido").value;
-            var id_part=0;
+            var id_part = 0;
             this.partidos.forEach(function (combo) {
-                if (combo.nombre == partidoDeCandidato){
+                if (combo.nombre == partidoDeCandidato) {
                     id_part = combo.id;
                 }
             })
-            let url = "V1/candidato/update?cedula="+document.getElementById("editcedula").value+
-            "&nombre="+document.getElementById("editnombre").value+"&apellido="+document.getElementById("editapellido").value
-            +"&resolucion="+document.getElementById("editresolucion").value+"&id_partido="+id_part;
+            let url = "V1/candidato/update?cedula=" + document.getElementById("editcedula").value +
+                "&nombre=" + document.getElementById("editnombre").value + "&apellido=" + document.getElementById("editapellido").value
+                + "&resolucion=" + document.getElementById("editresolucion").value + "&id_partido=" + id_part;
             const formData = new FormData();
             formData.append('file', this.candidatoEdit.foto);
             axios.patch(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
