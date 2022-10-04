@@ -51,7 +51,6 @@
         </div>
     <div class="column">
             <h3>Participación mesas</h3>
-            <p>Seleccionar Mesa</p>
             <br>
             <div class="col-sm-12 col-md-8 col-ls-8 col-xl-8">
                 <table class="table table-hover table-striped" v-if="resultMesas.length > 0">
@@ -114,6 +113,30 @@
 
             </div>
         </div>
+    <div class="column">
+            <h3>Congreso</h3>
+            <br>
+            <div class="col-sm-12 col-md-8 col-ls-8 col-xl-8">
+                <table class="table table-hover table-striped" v-if="resultCongreso.length > 0">
+                    <thead class="">
+                        <tr class="" style="background-color:rgba(56, 113, 176, 0.4)">
+                            <th>Foto Partido</th>
+                            <th>partido</th>
+                            <th>Participación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, idx) in resultCongreso">
+                            <td> <img :src="`data:image/png;base64, ${item.foto}`" width="100" height="100"> </td>
+                            <td>{{ item.partido }}</td>
+                            <td>{{ item.Participacion }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 v-else="resultCongreso == 0" class="my-5">No hay resultados</h2>
+
+            </div>
+        </div>
     </div>
     
 </template>
@@ -133,7 +156,8 @@ export default {
             resultPartido: [],
             resultPartido1: {
                 mesa: "",
-            }
+            },
+            resultCongreso: [],
         }
     },
     methods: {
@@ -211,6 +235,22 @@ export default {
                 });
             }
         },
+     getResultados4: async function () {
+            if (localStorage.getItem("token") === null) {
+                this.$emit('logOut');
+                return;
+            }
+            let token = localStorage.getItem("token");
+            axios.get('V1/resultado/listar_congreso',
+                { headers: { 'Authorization': `Bearer ${token}` } })
+                .then((result) => {
+                    this.resultCongreso = result.data;
+                    this.loaded = true;
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+        },
     },
 
    
@@ -219,6 +259,7 @@ export default {
         this.getResultados1(null);
         this.getResultados2();
         this.getResultados3(null);
+        this.getResultados4();
     }
 
 }
