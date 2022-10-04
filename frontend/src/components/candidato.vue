@@ -155,7 +155,7 @@
 <script>
 import axios from 'axios';
 export default {
-    name: 'account',
+    name: 'candidato',
     data: function () {
         return {
             name: "",
@@ -336,6 +336,7 @@ export default {
         },
     },
     created: function () {
+        this.$emit('verifyAuth');
         document.title = "Candidatos"
         this.getPartidos();
         this.getCandidatos();

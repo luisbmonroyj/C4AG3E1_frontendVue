@@ -70,7 +70,7 @@
 import { isTemplateElement } from '@babel/types';
 import axios from 'axios';
 export default {
-    name: 'account',
+    name: 'mesas',
     data: function () {
         return {
             name: "",
@@ -192,6 +192,7 @@ formData.append('file', this.candidatoEdit.foto);
         },
     },
     created: function () {
+        this.$emit('verifyAuth');        
         document.title = "Mesas"
         //this.getPartidos();
         this.getMesas();

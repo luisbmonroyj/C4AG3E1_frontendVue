@@ -14,7 +14,7 @@
               <a class="nav-link" v-on:click="loadPartidos" v-if="is_Admin == 1">Partidos</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" v-on:click="loadAccount" v-if="is_Admin == 1">Candidatos</a>
+              <a class="nav-link" v-on:click="loadCandidato" v-if="is_Admin == 1">Candidatos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" v-on:click="loadResultados" v-if="is_Auth == 1">Resultados</a>
@@ -114,8 +114,8 @@ export default {
     loadMesas: function () {
       this.$router.push({ name: 'mesas' })
     },
-    loadAccount: function () {
-      this.$router.push({ name: 'account' })
+    loadCandidato: function () {
+      this.$router.push({ name: 'candidato' })
     },
     loadPartidos: function () {
       this.$router.push({ name: 'partido' })
@@ -131,7 +131,7 @@ export default {
         this.$router.push({ name: 'resultados' });
       }
       else if (this.is_Admin == 1) {
-        this.$router.push({ name: 'account' });
+        this.$router.push({ name: 'candidato' });
       }
       else {
         console.log("no es nada")
