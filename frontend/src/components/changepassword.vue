@@ -1,49 +1,31 @@
 <template>
-    <div class="container">
+
+    <div class="container text-center">
+        <h2>Cambiar Contraseña</h2>
+        <br>
         <div class="row">
-            <div class="col-4">
-            </div>
-            <div class="col-4 border my-5 card">
-                <h2 class="my-5">Cambiar contraseña</h2>
-                <form v-on:submit.prevent="changePassword" v-on:updated="loadData">
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="number" id="cedula" class="form-control" v-model="user.cedula" disabled >
-                        </div>
-                        <div class="col-1"></div>
+            <div class="col-md-6 offset-md-3">
+                <form action="" v-on:submit.prevent="changePassword" v-on:updated="loadData" class="row g-3">
+                    <div class="row mb-3">
+                        <input type="number" id="cedula" class="form-control borde" v-model="user.cedula" placeholder="Cédula"
+                            disabled>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="email" id="email" class="form-control" v-model="user.username" disabled>
-                        </div>
-                        <div class="col-1"></div>
+                    <div class="row mb-3">
+                        <input type="email" id="email" class="form-control borde" v-model="user.username" placeholder="Email"
+                            disabled>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="password" id="contrasena" class="form-control" placeholder="Contraseña"
-                                v-model="user.contrasena" required>
-                        </div>
-                        <div class="col-1"></div>
+                    <div class="row mb-3">
+                        <input type="password" id="contrasena" class="form-control borde" v-model="user.contrasena"
+                            placeholder="Contraseña" required>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-1"></div>
-                        <div class="col-10">
-                            <input type="password" id="contrasena2" class="form-control" placeholder="Repetir Contraseña"
-                                v-model="user.contrasena2" required>
-                        </div>
-                        <div class="col-1"></div>
+                    <div class="row mb-3">
+                        <input type="password" id="contrasena2" class="form-control borde" v-model="user.contrasena"
+                            placeholder="Repetir Contraseña" required>
                     </div>
-                    <br>
-                    <button type="submit" class="btn btn-primary my-5">Cambiar contraseña</button>
+                    <div class="row mb-4">
+                        <input type="submit" class="btn btn-dark borde" value="Enviar Comentarios">
+                    </div>
                 </form>
-            </div>
-            <div class="col-4">
             </div>
         </div>
     </div>
@@ -57,33 +39,33 @@ export default {
     //con estos datos se carga el formulario
     name: 'signup',
     data: function () {
-       return {
-           user: {
-               cedula: localStorage.getItem('cedula'),
-               username: localStorage.getItem('user'),
-               contrasena: "",
-               contrasena2: ""
+        return {
+            user: {
+                cedula: localStorage.getItem('cedula'),
+                username: localStorage.getItem('user'),
+                contrasena: "",
+                contrasena2: ""
             }
         }
     },
     methods: {
         changePassword: async function () {
             //verificar que la contrasena sea igual en ambos campos
-            if (this.user.contrasena!=this.user.contrasena2){
-                alert("Los datos no coinciden");    
+            if (this.user.contrasena != this.user.contrasena2) {
+                alert("Los datos no coinciden");
                 return;
             }
-            else{
+            else {
                 if (localStorage.getItem("token") === null) {
                     this.$emit('logOut');
                     return;
                 }
-                else{
+                else {
                     let token = localStorage.getItem("token");
                     let url = "V1/usuario";
                     let userData = {
-                        'user':this.user.username,
-                        'cedula':parseInt(this.user.cedula),
+                        'user': this.user.username,
+                        'cedula': parseInt(this.user.cedula),
                         'contrasena': this.user.contrasena
                     }
                     /*
@@ -99,20 +81,20 @@ export default {
                     console.log("datos de formData");
                     console.log(formData);
                     */
-                   console.log(userData)
-                    axios.patch(url, 
-                                userData,
-                                { headers: { 'Authorization': `Bearer ${token}` } },
+                    console.log(userData)
+                    axios.patch(url,
+                        userData,
+                        { headers: { 'Authorization': `Bearer ${token}` } },
                     )
-                    .then((result) => {
-                        alert("Contraseña modificada. Debe volver a iniciar sesión");
-                        localStorage.clear();
-                        //this.$router.push({ name: 'root' })
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        alert("Error al cambiar la contraseña");
-                    })
+                        .then((result) => {
+                            alert("Contraseña modificada. Debe volver a iniciar sesión");
+                            localStorage.clear();
+                            //this.$router.push({ name: 'root' })
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            alert("Error al cambiar la contraseña");
+                        })
                 }
             }
             /*
@@ -142,10 +124,10 @@ export default {
                 });
                 */
         }
-   },
+    },
     created() {
         document.title = "Cambiar contraseña";
-        
+
     }
 
 }
