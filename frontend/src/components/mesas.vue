@@ -1,87 +1,69 @@
 <template>
-    <div class="container my-5 ">
-        <h1>Mesas</h1>
-        <div class="column">
-            <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
-                <h2 class="mb-5 border-bottom">Administrar Mesas</h2>
-                <form class="my-3" v-on:submit.prevent="createMesa">
-                    <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
-                    <label>Cedulas inscritas</label>
-                    <input type="text" class="form-control" placeholder="000000" v-model="mesa.cedulas">
-                    <br>
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="submit" innerText="Crear Mesa" class="btn btn-outline-secondary ">
-                            </button>
-                        </div>
-                        <div class="col-6">
-                            <button type="reset" class="btn btn-outline-secondary">
-                                Limpiar Formulario
-                            </button>
-                        </div>
+
+    <div class="container text-center">
+        <h2>Administrar Mesas</h2>
+        <br>
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <form action="" v-on:submit.prevent="createMesa" class="row g-3">
+                    <div class="row mb-3">
+                        <label for="">Cédulas inscritas en la mesa</label>
+                        <input type="number" class="form-control borde" v-model="mesa.cedulas"
+                            placeholder="Cantidad cédulas" required>
+                    </div>
+                    <div class="row mb-4">
+                        <input type="submit" class="btn btn-dark borde" value="Crear mesa">
                     </div>
                 </form>
             </div>
         </div>
-        <div class="column">
-            <div class="col-sm-12 col-md-8 col-ls-8 col-xl-8">
-                <table class="table table-hover table-striped" v-if="mesas.length > 0">
-                    <thead class="">
-                        <tr class="" style="background-color:rgba(56, 113, 176, 0.4)">
-                            <th>id Mesa</th>
-                            <th>Cédulas Inscritas</th>
-                            <!-- 
-                            <th>Nombre</th>
-                            <th>Resolucion</th>
-                            <th>id_partido</th>
-                            <th>foto</th> 
-                            -->
-                            <th>Editar mesa</th>
-                            <th>Eliminar mesa</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="(item, idx) in mesas">
-                            <td>
-                                {{ item.id }}
-                            </td>
-                            <td>
-                                <!-- {{ item.Cedulas_inscritas }} -->
+        <br>
+        <h1>Mesas</h1>
+        <br>
+        <table class="table table-hover table-striped" v-if="mesas.length > 0">
+            <thead class="table-dark">
+                <tr class="">
+                    <th>id Mesa</th>
+                    <th>Cédulas Inscritas</th>
 
-                                <input type="number" class="form-control" v-model=item.Cedulas_inscritas>
-                            </td>
-                            <!-- 
-                            <td>{{ item.nombre }}</td>
-                            <td>{{ item.resolucion }}</td>
-                            <td>{{ item.id_partido }}</td>
-                            <td><img src="data:image/png;base64, xx"/></td>
-                            -->
-                            <td scope="row" v-on:click="editarMesa(item.id, item.Cedulas_inscritas)">
-                                <button type="button" class="btn btn btn-outline-success py-1 px-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                                        class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path
-                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </td>
-                            <td scope="row" v-on:click="loadEliminarMesa(item.id)">
-                                <button type="button" class="btn btn-outline-danger py-1 px-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
-                                        class="bi bi-trash3-fillb" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z">
-                                        </path>
-                                    </svg></button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <h2 v-else="mesas == 0" class="my-5">No hay mesas</h2>
-            </div>
-        </div>
+                    <th>Editar mesa</th>
+                    <th>Eliminar mesa</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, idx) in mesas">
+                    <td>
+                        {{ item.id }}
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" v-model=item.Cedulas_inscritas>
+                    </td>
+                    <td scope="row" v-on:click="editarMesa(item.id, item.Cedulas_inscritas)">
+                        <button type="button" class="btn btn btn-outline-success py-1 px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                class="bi bi-pencil" viewBox="0 0 16 16">
+                                <path
+                                    d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z">
+                                </path>
+                            </svg>
+                        </button>
+                    </td>
+                    <td scope="row" v-on:click="loadEliminarMesa(item.id)">
+                        <button type="button" class="btn btn-outline-danger py-1 px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
+                                class="bi bi-trash3-fillb" viewBox="0 0 16 16">
+                                <path
+                                    d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5Zm-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5ZM4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06Zm6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528ZM8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5Z">
+                                </path>
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2 v-else="mesas == 0" class="my-5">No hay mesas</h2>
     </div>
+
 </template>
 
 <script>

@@ -1,47 +1,37 @@
 <template>
-    <div class="container my-5 ">
-        <h2 class="my-5">Bienvenido</h2>
-        <!-- <h1>Contáctenos</h1> -->
+
+    <div class="container text-center">
+        <h2>Contáctanos</h2>
+        <br>
         <div class="row">
-            <div class="col-sm-12 col-md-4 col-ls-4 col-xl-4">
-                <h2 class="mb-5 border-bottom">Contactenos</h2>
-                <form class="my-3" v-on:submit.prevent="enviarFormulario">
-                    <input type="text" class="form-control" placeholder="000000" v-model="contacto.cedula" required>
-                    <br>
-                    <input type="text" class="form-control" placeholder="Apellido" v-model="contacto.apellido" required>
-                    <br>
-                    <input type="text" class="form-control" placeholder="Nombre" v-model="contacto.nombre" required>
-                    <br>
-                    <input type="email" class="form-control" placeholder="Correo electrónico" v-model="contacto.email" required>
-                    <br>
-                    <textarea Name="comentario" rows="4" cols="45" placeholder="Ingrese sus comentarios aquí" required>
-                    </textarea>
-                    <br>
-                    <div class="row">
-                        <div class="col-6">
-                            <button type="submit" class="btn btn-outline-secondary ">Enviar comentarios
-                            </button>
+            <div class="col-md-6 offset-md-3">
+                <form action="" v-on:submit.prevent="enviarFormulario" class="row g-3">
+                    <div class="row mb-3">
+                        <input type="number" class="form-control borde" v-model="contacto.cedula" placeholder="Cedula">
+                    </div>
+                    <div class="row mb-3">
+                        <input type="text" class="form-control borde" v-model="contacto.nombre" placeholder="Nombres">
+                    </div>
+                    <div class="row mb-3">
+                        <input type="text" class="form-control borde" v-model="contacto.apellido"
+                            placeholder="Apellidos">
+                    </div>
+                    <div class="row mb-3">
+                        <input type="email" class="form-control borde" id="email" v-model="contacto.email"
+                            placeholder="Email">
+                    </div>
+                    <div class="row mb-3">
+                        <input type="password" class="form-control borde" v-model="contacto.contrasena"
+                            placeholder="Contraseña">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="mb-3">
+                            <textarea class="form-control" id="FormControlTextarea1" rows="3" placeholder="Comentarios"></textarea>
                         </div>
                     </div>
-                    <!-- 
-                    <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> --><!--
-                    <br>
-                    <input type="text" class="form-control" placeholder="Resolucion" v-model="candidato.resolucion">
-                    <br>
-                    <input type="file" class="form-control" ref="file" v-on:change="uploadFile()">
-                    <br>
-                    <input type="list" list="partidos" class="form-control" placeholder="partido" v-model="candidato.id_partido">
-                    <datalist id="partidos">
-                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
-                    </datalist>
-                    <br>
-                        <div class="col-6">
-                            <button type="reset" class="btn btn-outline-secondary">
-                                Limpiar Formulario
-                            </button>
-                        </div>
+                    <div class="row mb-4">
+                        <input type="submit" class="btn btn-outline-secondary borde" value="Registrar">
                     </div>
-                -->
                 </form>
             </div>
         </div>
@@ -49,23 +39,23 @@
 
 </template>
 <script>
-    
+
 export default {
     name: 'contactUs',
     data: function () {
         return {
-            contacto:{
-                cedula:"000000",
-                apellido:""
+            contacto: {
+                cedula: "",
+                apellido: ""
             }
         }
     },
     methods: {
-        enviarFormulario: function(){
+        enviarFormulario: function () {
             console.log("enviar formulario");
         }
     },
-    created(){
+    created() {
         document.title = "Contáctenos"
     }
 }

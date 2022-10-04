@@ -156,7 +156,9 @@ export default {
     this.verifyAuth();
   }
 }
+
 </script>
+
 <style>
 body {
   margin: 0 0 0 0;
@@ -186,6 +188,10 @@ input.borde{
 nav.menu{
     position: sticky;
     top: 0;
+}
+
+.separar{
+  margin-right: 8px;
 }
 
 </style>
