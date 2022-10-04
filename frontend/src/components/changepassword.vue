@@ -68,20 +68,6 @@ export default {
                         'cedula': parseInt(this.user.cedula),
                         'contrasena': this.user.contrasena
                     }
-                    /*
-                    console.log("datos de user");
-                    console.log( this.user.username);
-                    console.log( this.user.cedula);
-                    console.log( this.user.contrasena);
-                    console.log(userData);
-                    const formData = new FormData();
-                    formData.append('contrasena', this.user.contrasena);
-                    formData.append('cedula',this.user.cedula);
-                    formData.append('user',this.user.username);
-                    console.log("datos de formData");
-                    console.log(formData);
-                    */
-                    console.log(userData)
                     axios.patch(url,
                         userData,
                         { headers: { 'Authorization': `Bearer ${token}` } },
@@ -89,7 +75,6 @@ export default {
                         .then((result) => {
                             alert("Contraseña modificada. Debe volver a iniciar sesión");
                             localStorage.clear();
-                            //this.$router.push({ name: 'root' })
                         })
                         .catch((error) => {
                             console.log(error);
@@ -97,32 +82,6 @@ export default {
                         })
                 }
             }
-            /*
-           axios.post("V1/usuario",this.user,{ headers: {} })
-                .then((result) => {
-                    let dataSignUp = {
-                        user: this.user.user,
-                        contrasena: this.user.contrasena,
-                    }
-                    axios.post("http://localhost:7777/login",dataSignUp,{ headers: {} })
-                        .then((result) => {
-                            let dataLogin = {
-                                token: result.data.token,
-                                user: dataSignUp.user
-                            }
-                            this.$emit('completedLogin', dataLogin);
-                        })
-                        .catch((error) => {
-                            if (error.response.status == '401') {
-                                alert("ERROR 401");
-                            }
-                        });
-                })
-                .catch((error) => {
-                    console.log(error);
-                    alert("Error en el registro");
-                });
-                */
         }
     },
     created() {
