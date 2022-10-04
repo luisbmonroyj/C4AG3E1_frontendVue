@@ -72,6 +72,48 @@
 
             </div>
         </div>
+     <div class="column">
+            <h3>Resultados Por Partido</h3>
+            <p>Seleccionar Mesa</p>
+            <form class="my-3">
+                    <!-- <input type="date" class="form-control my-3" :min="dateNow2()" v-model="cita.fecha"> -->
+                    <input type="text" class="form-control" placeholder="0" v-model="resultPartido1.mesa">
+                    <br>
+                    <div class="row">
+                        <div class="col-6">
+                            <button type="submit" class="btn btn-outline-secondary" v-on:click="getResultados3(1)">
+                                Filtrar por Mesa
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button type="reset" class="btn btn-outline-secondary"  v-on:click="getResultados3(null)">
+                                Ver todas las Mesas
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            <br>
+            <div class="col-sm-12 col-md-8 col-ls-8 col-xl-8">
+                <table class="table table-hover table-striped" v-if="resultPartido.length > 0">
+                    <thead class="">
+                        <tr class="" style="background-color:rgba(56, 113, 176, 0.4)">
+                            <th>Foto Partido</th>
+                            <th>Partido</th>
+                            <th>Votos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(item, idx) in resultPartido">
+                            <td> <img :src="`data:image/png;base64, ${item.foto}`" width="100" height="100"> </td>
+                            <td>{{ item.partido }}</td>
+                            <td>{{ item.votos }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h2 v-else="resultPartido == 0" class="my-5">No hay resultados</h2>
+
+            </div>
+        </div>
     </div>
     
 </template>
@@ -88,6 +130,10 @@ export default {
                 mesa: "",
             },
             resultMesas: [],
+            resultPartido: [],
+            resultPartido1: {
+                mesa: "",
+            }
         }
     },
     methods: {
@@ -108,7 +154,7 @@ export default {
                     console.log(error)
                 });
             } else {
-                axios.get('V1/resultado/listar_por_candidato?id_mesa=' + mesa,
+                axios.get('V1/resultado/listar_por_candidato?id_mesa=' + this.resultadosCandidato1.mesa,
                 { headers: { 'Authorization': `Bearer ${token}` },})
                 .then((result) => {
                     this.resultCandidato = result.data;
@@ -135,12 +181,44 @@ export default {
                 .catch((error) => {
                     console.log(error)
                 });
-        }
+        },
+
+     getResultados3: async function (mesa) {
+            if (localStorage.getItem("token") === null) {
+                this.$emit('logOut');
+                return;
+            }
+            let token = localStorage.getItem("token");
+            if (mesa === null){
+            axios.get('V1/resultado/listar_votos_partido',
+                { headers: { 'Authorization': `Bearer ${token}` } })
+                .then((result) => {
+                    this.resultPartido = result.data;
+                    this.loaded = true;
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            } else {
+                axios.get('V1/resultado/listar_votos_partido?id_mesa=' + this.resultPartido1.mesa,
+                { headers: { 'Authorization': `Bearer ${token}` },})
+                .then((result) => {
+                    this.resultPartido = result.data;
+                    this.loaded = true;
+                })
+                .catch((error) => {
+                    console.log(error)
+                });
+            }
+        },
     },
+
+   
     created: function () {
         document.title = "Resultados"
         this.getResultados1(null);
         this.getResultados2();
+        this.getResultados3(null);
     }
 
 }
