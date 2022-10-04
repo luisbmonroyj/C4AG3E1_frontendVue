@@ -34,6 +34,7 @@
 export default {
     name: 'about',
     created() {
+        document.title = "¿Quienes somos?"
     }
 }
 </script>
