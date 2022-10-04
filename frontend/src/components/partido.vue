@@ -6,32 +6,18 @@
                     <h2>Registrar Partidos</h2>
                     <br>
                     <div class="row">
-                        <form action="" v-on:submit.prevent="createCandidato" class="row">
+                        <form action="" v-on:submit.prevent="createPartido" class="row">
                             <div class="col separar">
                                 <div class="row mb-3">
-                                    <input type="number" class="form-control borde" id="cedula"
-                                        v-model="candidato.cedula" placeholder="Cédula">
+                                    <input type="text" class="form-control borde" id="nombre"
+                                        v-model="partido.nombre" placeholder="Nombre de partido">
                                 </div>
                                 <div class="row mb-3">
-                                    <input type="text" class="form-control borde" id="nombres"
-                                        v-model="candidato.nombre" placeholder="Nombres">
-                                </div>
-                                <div class="row mb-3">
-                                    <label>Seleccione Partido</label>
-                                    <select id="partidos" class="form-select borde" v-model="candidato.id_partido">
-                                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
-                                    </select>
+                                    <input type="text" class="form-control borde" id="lema"
+                                        v-model="partido.lema" placeholder="Lema de partido">
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="row mb-3">
-                                    <input type="text" class="form-control borde" id="resolucion"
-                                        v-model="candidato.resolucion" placeholder="Resolución">
-                                </div>
-                                <div class="row mb-3">
-                                    <input type="text" class="form-control borde" id="apellidos"
-                                        v-model="candidato.apellido" placeholder="Apellidos">
-                                </div>
                                 <br>
                                 <div class="row mb-4">
                                     <input type="file" class="form-control borde" ref="file" v-on:change="uploadFile()">
@@ -60,34 +46,24 @@
                     <h2>Editar Partidos</h2>
                     <br>
                     <div class="row">
-                        <form action="" v-on:submit.prevent="editarCandidato" class="row">
+                        <form action="" v-on:submit.prevent="editarPartido" class="row">
                             <div class="col separar">
                                 <div class="row mb-3">
-                                    <input type="number" class="form-control borde" id="editcedula"
-                                        v-model="candidato.cedula" placeholder="Cédula" disabled>
-                                </div>
-                                <div class="row mb-3">
                                     <input type="text" class="form-control borde" id="editnombre"
-                                        v-model="candidato.nombre" placeholder="Nombres">
+                                        placeholder="Nombre de partido">
                                 </div>
-
                                 <div class="row mb-3">
-                                    <input type="list" list="partidos" class="form-control" placeholder="partido"
-                                        id="editpartido">
-                                    <datalist id="partidos1">
-                                        <option v-for="(item,idx) in partidos">{{ item.nombre }}</option>
-                                    </datalist>
+                                    <input type="text" class="form-control borde" id="editlema"
+                                        placeholder="Lema de partido">
                                 </div>
+                                <div class="row mb-3">
+                                    <input type="text" class="form-control borde" id="editpartido"
+                                        disabled>
+                                </div>
+                                
                             </div>
                             <div class="col">
-                                <div class="row mb-3">
-                                    <input type="text" class="form-control borde" id="editresolucion"
-                                        v-model="candidato.resolucion" placeholder="Resolución">
-                                </div>
-                                <div class="row mb-3">
-                                    <input type="text" class="form-control borde" id="editapellido"
-                                        v-model="candidato.apellido" placeholder="Apellidos">
-                                </div>
+                                
                                 <div class="row mb-4">
                                     <input type="file" class="form-control" ref="file2" v-on:change="uploadFile2()">
                                 </div>
@@ -113,19 +89,20 @@
 
 
 
-        <h1>Candidatos</h1>
+        <h1>Partidos</h1>
         <div class="container">
-            <table class="table table-striped table-hover table-bordered" v-if="candidatos.length > 0">
+            <table class="table table-striped table-hover table-bordered" v-if="partidos.length > 0">
                 <tr v-for="(item, idx) in partidos">
                     <td style="width:15%">
                         <img :src="`data:image/png;base64, ${item.foto}`" style="width:210px; height:210px">
                     </td>
                     <td>
-                        <p>{{ item.nombre }} {{ item.apellido }}</p>
-                        <p>Resolución: {{ item.resolucion }}</p>
-                        <p>Partido: {{ item.id_partido }}</p>
+                        <p>{{ item.nombre }}</p>
                     </td>
-                    <td scope="row" v-on:click="loadEditarCandidato(item.cedula)">
+                    <td>
+                        <p>{{ item.lema}}</p>
+                    </td>
+                    <td scope="row" v-on:click="loadEditarPartido(item.id)">
                         <button type="button" class="btn btn btn-outline-success py-1 px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                                 class="bi bi-pencil" viewBox="0 0 16 16">
@@ -135,7 +112,7 @@
                             </svg>
                         </button>
                     </td>
-                    <td scope="row" v-on:click="loadEliminarCandidato(item.cedula)">
+                    <td scope="row" v-on:click="loadEliminarPartido(item.id)">
                         <button type="button" class="btn btn-outline-danger py-1 px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                                 class="bi bi-trash3-fillb" viewBox="0 0 16 16">
@@ -147,7 +124,7 @@
                     </td>
                 </tr>
             </table>
-            <h2 v-else="candidatos == 0" class="my-5">No hay partidos</h2>
+            <h2 v-else="partidos == 0" class="my-5">No hay partidos</h2>
         </div>
     </div>
 </template>
@@ -161,44 +138,42 @@ export default {
             name: "",
             partidos: [],
             loaded: false,
-            candidato: {
-                cedula: "",
-                apellido: "",
+            partido: {
                 nombre: "",
-                resolucion: "",
-                id_partido: "",
+                lema: "",
                 foto: ({ images: null })
             },
-            partidos: [],
-            candidatoEdit: {
+            partidosEdit: [],
+            partidoEdit: {
                 foto: ({ images: null })
             }
         }
     },
     methods: {
         uploadFile() {
-            this.candidato.foto = this.$refs.file.files[0];
+            this.partido.foto = this.$refs.file.files[0];
         },
         uploadFile2() {
-            this.candidatoEdit.foto = this.$refs.file.files[0];
+            this.partidoEdit.foto = this.$refs.file2.files[0];
         },
-        getCandidatos: async function () {
-            if (localStorage.getItem("token") === null) {
-                this.$emit('logOut');
-                return;
-            }
-            let token = localStorage.getItem("token");
-            axios.get('V1/candidato/get',
-                { headers: { 'Authorization': `Bearer ${token}` } })
-                .then((result) => {
-                    this.candidatos = result.data.Candidatos;
-                    this.loaded = true;
-                })
-                .catch((error) => {
-                    console.log(error)
-                    this.$emit('logOut');
-                });
-        },
+        
+        // getCandidatos: async function () {
+        //     if (localStorage.getItem("token") === null) {
+        //         this.$emit('logOut');
+        //         return;
+        //     }
+        //     let token = localStorage.getItem("token");
+        //     axios.get('V1/candidato/get',
+        //         { headers: { 'Authorization': `Bearer ${token}` } })
+        //         .then((result) => {
+        //             this.candidatos = result.data.Candidatos;
+        //             this.loaded = true;
+        //         })
+        //         .catch((error) => {
+        //             console.log(error)
+        //             this.$emit('logOut');
+        //         });
+        // },
         getPartidos: async function () {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
@@ -222,15 +197,15 @@ export default {
             return x; 
         },
         */
-        loadEditarCandidato: function (cedula_candidato) {
-            this.candidatos.forEach(function (candidato) {
-                if (candidato.cedula == cedula_candidato) {
-                    document.getElementById("editcedula").value = cedula_candidato;
-                    document.getElementById("editnombre").value = candidato.nombre;
-                    document.getElementById("editapellido").value = candidato.apellido;
-                    document.getElementById("editresolucion").value = candidato.resolucion;
+        loadEditarPartido: function (id) {
+            this.partidos.forEach(function (partido) {
+                if (partido.id == id) {
+                    //document.getElementById("edit").value = id;
+                    document.getElementById("editnombre").value = partido.nombre;
+                    document.getElementById("editlema").value = partido.lema;
+                    //document.getElementById("editresolucion").value = partido.resolucion;
                     /*
-                    let id_partido_candidato = candidato.id_partido
+                    let id_partido_candidato = partido.id_partido
                     
                     var id_part="";
                     this.partidos.forEach(function (combo) {
@@ -239,78 +214,83 @@ export default {
                         }
                     })
                     */
-                    document.getElementById("editpartido").value = candidato.id_partido;
+                    document.getElementById("editpartido").value = partido.id;
                 }
             })
 
         },
-        loadEliminarCandidato: async function (cedula_candidato) {
+        loadEliminarPartido: async function (id) {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
                 return;
             }
             let token = localStorage.getItem("token");
-            let conf = confirm("¿Seguro desea eliminar el candidato?");
+            let conf = confirm("¿Seguro desea eliminar el partido?");
             if (conf === true) {
                 axios.delete(
-                    `V1/candidato/delete`,
+                    `V1/partido/delete`,
                     {
                         headers: { 'Authorization': `Bearer ${token}` },
-                        data: { "cedula": cedula_candidato }
+                        data: { "id": id }
                     },
                 )
                     .then(() => {
-                        alert("Candidato eliminado correctamente")
-                        this.getCandidatos()
+                        alert("Partido eliminado correctamente")
+                        this.getPartidos()
                     }
                     )
                     .catch((error) => {
                         console.log(error);
-                        alert("Error al eliminar el candidato")
+                        alert("Error al eliminar el partido")
                     })
             }
             else {
                 alert("Se canceló la eliminación");
-                this.getCandidatos()
+                this.getPartidos()
             }
 
 
         },
-        createCandidato: async function () {
+        createPartido: async function () {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
                 return;
             }
             let token = localStorage.getItem("token");
-            let partidoDeCandidato = this.candidato.id_partido;
+            /*
+            let partidoDeCandidato = this.partido.id_partido;
             var id_part = 0;
             this.partidos.forEach(function (combo) {
                 if (combo.nombre == partidoDeCandidato) {
                     id_part = combo.id;
                 }
             })
-            let url = "V1/candidato/create?cedula=" + this.candidato.cedula +
-                "&nombre=" + this.candidato.nombre + "&apellido=" + this.candidato.apellido
-                + "&resolucion=" + this.candidato.resolucion + "&id_partido=" + id_part;
+            */
+            let url = "V1/partido/create?" + "nombre=" + this.partido.nombre + "&lema=" + this.partido.lema;
+            console.log(url);
             const formData = new FormData();
-            formData.append('file', this.candidato.foto);
+            console.log(formData);
+            formData.append('file', this.partido.foto);
+            console.log(formData);
+            console.log(this.partido.foto);
             axios.post(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
             )
                 .then((result) => {
-                    alert("Candidato creado");
-                    this.getCandidatos();
+                    alert("Partido creado");
+                    this.getPartidos();
                 })
                 .catch((error) => {
                     console.log(error);
-                    alert("Error al crear el candidato");
+                    alert("Error al crear el partido");
                 })
         },
-        editarCandidato: async function () {
+        editarPartido: async function () {
             if (localStorage.getItem("token") === null) {
                 this.$emit('logOut');
                 return;
             }
             let token = localStorage.getItem("token");
+            /*
             let partidoDeCandidato = document.getElementById("editpartido").value;
             var id_part = 0;
             this.partidos.forEach(function (combo) {
@@ -318,27 +298,27 @@ export default {
                     id_part = combo.id;
                 }
             })
-            let url = "V1/candidato/update?cedula=" + document.getElementById("editcedula").value +
-                "&nombre=" + document.getElementById("editnombre").value + "&apellido=" + document.getElementById("editapellido").value
-                + "&resolucion=" + document.getElementById("editresolucion").value + "&id_partido=" + id_part;
+            */
+            let url = "V1/partido/update?id=" + document.getElementById("editpartido").value +
+                "&nombre=" + document.getElementById("editnombre").value + "&lema=" + document.getElementById("editlema").value;
             const formData = new FormData();
-            formData.append('file', this.candidatoEdit.foto);
+            formData.append('file', this.partidoEdit.foto);
             axios.patch(url, formData, { headers: { 'Authorization': `Bearer ${token}` } },
             )
                 .then((result) => {
-                    alert("Candidato modificado");
-                    this.getCandidatos();
+                    alert("Partido modificado");
+                    this.getPartidos();
                 })
                 .catch((error) => {
                     console.log(error);
-                    alert("Error al editar el candidato");
+                    alert("Error al editar el partido");
                 })
         },
     },
     created: function () {
-        document.title = "Candidatos"
+        document.title = "Partidos"
         this.getPartidos();
-        this.getCandidatos();
+        //this.getCandidatos();
     }
 
 }
