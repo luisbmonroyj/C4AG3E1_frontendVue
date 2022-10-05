@@ -19,7 +19,7 @@
                             placeholder="Contraseña" required>
                     </div>
                     <div class="row mb-3">
-                        <input type="password" id="contrasena2" class="form-control borde" v-model="user.contrasena"
+                        <input type="password" id="contrasena2" class="form-control borde" v-model="user.contrasena2"
                             placeholder="Repetir Contraseña" required>
                     </div>
                     <div class="row mb-4">
